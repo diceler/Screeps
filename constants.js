@@ -35,6 +35,6 @@ global.LINK = keyMirror({
   DEPOT: null,
 });
 
-global.ROLE_HARVESTER = 'harvester';
-
-global.ROLE_ABBREVIATION = {};
+global.ROLE = keyMirror({
+  HARVESTER: null,
+});
