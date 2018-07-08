@@ -52,7 +52,11 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
         this.memory.capacity = capacity;
       }
 
-      this._isAtFullCapacity = _.size(_.filter(this.links, {type: LINK_HARVESTER})) >= this.memory.capacity;
+      const linkedHarvesters = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {type: LINK_HARVESTER, id: this.id})));
+      const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
+      const combinedHarvestPower = totalWorkParts * HARVEST_POWER;
+
+      this._isAtFullCapacity = combinedHarvestPower > 10 || _.size(linkedHarvesters) >= this.memory.capacity;
     }
 
     return this._isAtFullCapacity;
