@@ -1,0 +1,10 @@
+require('creep.define');
+require('creep.extend');
+require('room.define');
+require('room.extend');
+require('roomposition.define');
+require('roomposition.extend');
+require('source.define');
+require('source.extend');
+require('structure.define');
+require('structure.extend');

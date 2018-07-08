@@ -1,3 +1,5 @@
+require('main.imports');
+
 module.exports.loop = () => {
   clearMemory();
 };
