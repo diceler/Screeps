@@ -9,7 +9,7 @@ Creep.prototype.linkTo = function (target, type) {
   }
 
   // Is target linkable?
-  if (!target.hasOwnProperty('links')) {
+  if (_.isUndefined(target.links)) {
     return ERR_INVALID_ARGS;
   }
 
@@ -27,7 +27,7 @@ Creep.prototype.unlink = function (target) {
   }
 
   // Is target linkable?
-  if (!target.hasOwnProperty('links')) {
+  if (_.isUndefined(target.links)) {
     return ERR_INVALID_ARGS;
   }
 
