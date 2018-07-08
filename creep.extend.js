@@ -1,3 +1,19 @@
+const Harvester = require('role.harvester');
+
+Creep.prototype.loop = function () {
+  if (this.spawning) {
+    return;
+  }
+
+  switch (this.memory.role) {
+    case ROLE.HARVESTER:
+      Harvester.tick(this);
+      break;
+    default:
+      break;
+  }
+};
+
 Creep.prototype.__moveTo = Creep.prototype.moveTo;
 Creep.prototype.moveTo = function (target, options) {
   const pathLength = _.size(this.memory._move.path);
