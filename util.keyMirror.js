@@ -1,4 +1,4 @@
-const keyMirror = function(obj) {
+global.keyMirror = function(obj) {
   let ret = {};
   let key;
   if (!(obj instanceof Object && !Array.isArray(obj))) {
@@ -11,5 +11,3 @@ const keyMirror = function(obj) {
   }
   return ret;
 };
-
-module.exports = keyMirror;
