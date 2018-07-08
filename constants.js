@@ -22,3 +22,11 @@ global.ENERGY_CAPACITY_AVAILABLE = {
 global.TERRAIN_PLAIN = 'plain';
 global.TERRAIN_SWAMP = 'swamp';
 global.TERRAIN_WALL = 'wall';
+
+/**
+ * Object link constants
+ * @type {string}
+  */
+global.LINK_HARVESTER = 'harvester';
+global.LINK_UPGRADER = 'upgrader';
+global.LINK_DEPOT = 'depot';
