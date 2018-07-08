@@ -1,6 +1,6 @@
 Creep.prototype.__moveTo = Creep.prototype.moveTo;
 Creep.prototype.moveTo = function (target, options) {
-  const pathLength = _.size(this.memory._move);
+  const pathLength = _.size(this.memory._move.path);
 
   const opts = _.assign({
     reusePath: this.isStuck ? 0 : pathLength,
