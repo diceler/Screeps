@@ -19,6 +19,22 @@ Object.defineProperty(Creep.prototype, 'isFatigued', {
   }
 });
 
+Object.defineProperty(Creep.prototype, 'isStuck', {
+  configurable: true,
+  get: function () {
+    // Set defaults
+    this.memory.isStuck = this.memory.isStuck || false;
+    this.memory.stuckCount = this.memory.stuckCount || 0;
+    this.memory.lastPos = this.memory.lastPos || this.pos;
+
+    // Set values
+    this.memory.stuckCount = this.pos.sameAs(this.memory.lastPos) ? this.memory.stuckCount + 1 : 0;
+    this.memory.isStuck = this.memory.stuckCount === MAX_STUCK;
+
+    return this.memory.isStuck;
+  }
+});
+
 Object.defineProperty(Creep.prototype, 'links', {
   configurable: true,
   get: function () {

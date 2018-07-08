@@ -1,8 +1,12 @@
 global.USERNAME = _.get(_.first(_.toArray(Game.structures)), 'owner.username');
 
 /**
+ * Settings.
+ */
+global.MAX_STUCK = 3;
+
+/**
  * Built-in energy capacity availability.
- * @type {{1: number, 2: number, 3: number, 4: number, 5: number, 6: number, 7: number, 8: number}}
  */
 global.ENERGY_CAPACITY_AVAILABLE = {
   1: 300,  // RCL 1
@@ -17,15 +21,13 @@ global.ENERGY_CAPACITY_AVAILABLE = {
 
 /**
  * Terrain constants.
- * @type {string}
  */
 global.TERRAIN_PLAIN = 'plain';
 global.TERRAIN_SWAMP = 'swamp';
 global.TERRAIN_WALL = 'wall';
 
 /**
- * Object link constants
- * @type {string}
+ * Object link constants.
   */
 global.LINK_HARVESTER = 'harvester';
 global.LINK_UPGRADER = 'upgrader';

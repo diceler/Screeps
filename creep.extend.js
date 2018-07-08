@@ -1,3 +1,15 @@
+Creep.prototype.__moveTo = Creep.prototype.moveTo;
+Creep.prototype.moveTo = function (target, options) {
+  const pathLength = _.size(this.memory._move);
+
+  const opts = _.assign({
+    reusePath: this.isStuck ? 0 : pathLength,
+    noPathFinding: !this.isStuck && pathLength > 0,
+  }, options);
+
+  this.__moveTo(target, opts);
+};
+
 Creep.prototype.linkTo = function (target, type) {
   if (!target) {
     return ERR_NOT_FOUND;

@@ -1,3 +1,4 @@
+require('constants');
 require('creep.define');
 require('creep.extend');
 require('room.define');
