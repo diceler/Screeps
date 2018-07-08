@@ -1,3 +1,4 @@
+require('util.keyMirror');
 require('constants');
 require('creep.define');
 require('creep.extend');

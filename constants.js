@@ -28,7 +28,13 @@ global.TERRAIN_WALL = 'wall';
 
 /**
  * Object link constants.
-  */
-global.LINK_HARVESTER = 'harvester';
-global.LINK_UPGRADER = 'upgrader';
-global.LINK_DEPOT = 'depot';
+ */
+global.LINK = keyMirror({
+  HARVESTER: null,
+  UPGRADER: null,
+  DEPOT: null,
+});
+
+global.ROLE_HARVESTER = 'harvester';
+
+global.ROLE_ABBREVIATION = {};

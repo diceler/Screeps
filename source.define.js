@@ -52,7 +52,7 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
         this.memory.capacity = capacity;
       }
 
-      const linkedHarvesters = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {type: LINK_HARVESTER, id: this.id})));
+      const linkedHarvesters = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {type: LINK.HARVESTER, id: this.id})));
       const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
       const combinedHarvestPower = totalWorkParts * HARVEST_POWER;
 
@@ -88,7 +88,7 @@ Object.defineProperty(Source.prototype, 'hasDepot', {
   configurable: true,
   get: function () {
     if (_.isUndefined(this._hasDepot)) {
-      this.memory.hasDepot = !_.isUndefined(_.find(this.links, {type: LINK_DEPOT}));
+      this.memory.hasDepot = !_.isUndefined(_.find(this.links, {type: LINK.DEPOT}));
       this._hasDepot = this.memory.hasDepot;
     }
 
