@@ -2,6 +2,7 @@ require('main.imports');
 
 module.exports.loop = () => {
   clearMemory();
+  executeLoops();
 };
 
 function clearMemory() {
@@ -25,4 +26,22 @@ function clearMemory() {
       delete Memory.flags[flag];
     }
   }
+}
+
+function executeLoops() {
+  for (const room in Memory.rooms) {
+    Game.rooms[room].loop();
+  }
+  for (const creep in Memory.creeps) {
+    Game.rooms[creep].loop();
+  }
+  for (const structure in Memory.structures) {
+    Game.rooms[structure].loop();
+  }
+  // for (const constructionSite in Memory.constructionSitea) {
+  //   Game.rooms[constructionSite].loop();
+  // }
+  // for (const flag in Memory.flags) {
+  //   Game.rooms[flag].loop();
+  // }
 }
