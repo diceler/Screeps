@@ -1,8 +1,9 @@
 RoomObject.prototype.placeRequest = function (request) {
   Memory.requests = Memory.requests || INIT_REQUESTS;
   let requestType = Memory.requests[request.type];
+  const {type, objectId} = request;
 
-  if (!_.find(requestType, request.objectId)) {
+  if (!_.find(requestType, {type, objectId})) {
     requestType.push(request);
   }
 };
