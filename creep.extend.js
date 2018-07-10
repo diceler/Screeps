@@ -13,6 +13,10 @@ Creep.prototype.loop = function () {
     return;
   }
 
+  if (this.ticksToLive === 1) {
+    this.unlinkAll();
+  }
+
   switch (this.memory.role) {
     case ROLE.HARVESTER:
       Harvester.tick(this);

@@ -47,3 +47,15 @@ RoomObject.prototype.unlink = function (target) {
 
   return OK;
 };
+
+RoomObject.prototype.unlinkAll = function () {
+  const clonedLinks = _.clone(this.links);
+
+  _.forEach(clonedLinks, link => {
+    const linkedTarget = Game.getObjectById(link.id);
+
+    if (!_.isUndefined(linkedTarget)) {
+      this.unlink(linkedTarget);
+    }
+  }, this);
+};
