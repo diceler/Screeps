@@ -28,7 +28,8 @@ Object.defineProperty(Creep.prototype, 'isStuck', {
     this.memory.lastPos = this.memory.lastPos || this.pos;
 
     // Set values
-    this.memory.stuckCount = this.pos.sameAs(this.memory.lastPos) ? this.memory.stuckCount + 1 : 0;
+    const {x, y, roomName} = this.memory.lastPos;
+    this.memory.stuckCount = this.pos.sameAs(new RoomPosition(x, y, roomName)) ? this.memory.stuckCount + 1 : 0;
     this.memory.isStuck = this.memory.stuckCount === MAX_STUCK;
 
     return this.memory.isStuck;

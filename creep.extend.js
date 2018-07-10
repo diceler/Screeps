@@ -20,7 +20,7 @@ Creep.prototype.moveTo = function (target, options) {
     return ERR_TIRED;
   }
 
-  const pathLength = _.size(this.memory._move.path);
+  const pathLength = _.size(_.get(this.memory._move, 'path', null));
 
   const opts = _.assign({
     reusePath: this.isStuck ? 0 : pathLength,
