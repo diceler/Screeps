@@ -53,7 +53,7 @@ Spawn.prototype.spawnCreep = function (role, memory) {
   }
 
   const name = this.generateCreepName(role);
-  return this.__spawnCreep(body, name, memory);
+  return this.__spawnCreep(body, name, {memory});
 };
 
 Spawn.prototype.getCreepBody = function (role) {
