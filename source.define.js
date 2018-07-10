@@ -56,42 +56,9 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
       const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
       const combinedHarvestPower = totalWorkParts * HARVEST_POWER;
 
-      this._isAtFullCapacity = combinedHarvestPower > 10 || _.size(linkedHarvesters) >= this.memory.capacity;
+      this._isAtFullCapacity = combinedHarvestPower >= 10 || _.size(linkedHarvesters) >= this.memory.capacity;
     }
 
     return this._isAtFullCapacity;
-  }
-});
-
-Object.defineProperty(Source.prototype, 'links', {
-  configurable: true,
-  get: function () {
-    if (_.isUndefined(this._links)) {
-      this.memory.links = this.memory.links || [];
-      this._links = this.memory.links;
-    }
-
-    return this._links;
-  },
-  set: function (value) {
-    this.memory.links = this.memory.links || [];
-
-    const link = _.find(this.memory.links, {id: value.id});
-
-    if (_.isUndefined(link)) {
-      this.memory.links.push(value);
-    }
-  }
-});
-
-Object.defineProperty(Source.prototype, 'hasDepot', {
-  configurable: true,
-  get: function () {
-    if (_.isUndefined(this._hasDepot)) {
-      this.memory.hasDepot = !_.isUndefined(_.find(this.links, {type: LINK.DEPOT}));
-      this._hasDepot = this.memory.hasDepot;
-    }
-
-    return this._hasDepot;
   }
 });

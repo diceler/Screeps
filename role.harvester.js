@@ -1,91 +1,65 @@
 /**
  * Harvester
- * @type {{tick: module.export.tick}}
  */
 module.exports = {
   tick: function (creep) {
     if (creep.isFull) {
-
       deliver(creep);
-
     } else {
-
       harvest(creep);
-
     }
   }
 };
 
 function harvest(creep) {
-  let source;
   let linkedSource = _.find(creep.links, {type: LINK.HARVESTER});
 
   if (linkedSource) {
-
-    source = Game.getObjectById(linkedSource.id);
+    const source = Game.getObjectById(linkedSource.id);
 
     if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
       creep.moveTo(source);
     }
+  } else if (creep.memory.linkTo) {
+    const target = Game.getObjectById(creep.memory.linkTo);
 
+    if (creep.linkTo(target, LINK.HARVESTER) === OK) {
+      delete creep.memory.linkTo;
+    }
   } else {
-
-    const availableSources = creep.room.find(FIND_SOURCES, {filter: source => !source.isAtFullCapacity});
-
-    // No available sources. Kill creep to save resources.
-    if (!_.size(availableSources)) {
-      // TODO: Find better alternative.
-      creep.suicide();
-      return;
-    }
-
-    source = _.first(availableSources);
-
-    if (creep.linkTo(source, LINK.HARVESTER) === OK) {
-      if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(source);
-      }
-    }
-
+    console.log(`${creep.name} has no Source target. Something went wrong.`);
+    creep.suicide();
   }
-
 }
 
 function deliver(creep) {
-  let depot;
-  let linkedDepot = _.find(creep.links, {type: LINK.DEPOT});
+  let deposit;
+  let linkedDeposit = _.find(creep.links, {type: LINK.DEPOSIT});
 
-  if (linkedDepot) {
-
-    depot = Game.getObjectById(linkedDepot.id);
-    const actionResult = creep.transfer(depot, RESOURCE_ENERGY);
+  if (linkedDeposit) {
+    deposit = Game.getObjectById(linkedDeposit.id);
+    const actionResult = creep.transfer(deposit, RESOURCE_ENERGY);
 
     switch (actionResult) {
       case ERR_NOT_IN_RANGE:
-        creep.moveTo(depot);
+        creep.moveTo(deposit);
         break;
       case ERR_FULL:
       case OK:
-        creep.unlink(depot);
+        creep.unlink(deposit);
         break;
     }
-
   } else {
-
     const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
 
     if (_.size(deposits)) {
+      deposit = _.first(deposits);
 
-      depot = _.first(deposits);
-
-      if (creep.linkTo(depot, LINK.DEPOT) === OK) {
-        if (creep.transfer(depot, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(depot);
+      if (creep.linkTo(deposit, LINK.DEPOSIT) === OK) {
+        if (creep.transfer(deposit, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(deposit);
         }
       }
-
     }
-
   }
-
 }

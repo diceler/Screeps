@@ -4,6 +4,7 @@ global.USERNAME = _.get(_.first(_.toArray(Game.structures)), 'owner.username');
  * Settings.
  */
 global.MAX_STUCK = 3;
+global.MAX_HARVEST_POWER = 10;
 
 /**
  * Built-in energy capacity availability.
@@ -32,9 +33,40 @@ global.TERRAIN_WALL = 'wall';
 global.LINK = keyMirror({
   HARVESTER: null,
   UPGRADER: null,
-  DEPOT: null,
+  DEPOSIT: null,
 });
 
+/**
+ * Role constants.
+ */
 global.ROLE = keyMirror({
   HARVESTER: null,
+  HAULER: null,
+  UPGRADER: null,
+  BUILDER: null,
 });
+
+/**
+ * Request constants.
+ */
+global.REQUEST = keyMirror({
+  HARVESTER: null,
+  HAULER: null,
+  UPGRADER: null,
+  BUILDER: null,
+  REPAIRER: null,
+  LOW_ENERGY: null,
+  LOW_HEALTH: null,
+  DEFEND: null,
+});
+
+global.INIT_REQUESTS = {
+  [REQUEST.UPGRADER]: [],
+  [REQUEST.REPAIRER]: [],
+  [REQUEST.BUILDER]: [],
+  [REQUEST.HARVESTER]: [],
+  [REQUEST.HAULER]: [],
+  [REQUEST.LOW_ENERGY]: [],
+  [REQUEST.LOW_HEALTH]: [],
+  [REQUEST.DEFEND]: [],
+};
