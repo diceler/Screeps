@@ -30,3 +30,24 @@ Object.defineProperty(Room.prototype, 'creeps', {
     return this._creeps;
   }
 });
+
+Object.defineProperty(Room.prototype, 'sources', {
+  configurable: true,
+  get: function () {
+    if (_.isUndefined(this._sources)) {
+      if (_.isUndefined(Memory.sources)) {
+        Memory.sources = {};
+        const sources = _.map(this.find(FIND_SOURCES), source => source.id);
+        _.forEach(sources, sourceId => {
+          Memory.sources[sourceId] = {
+            roomName: this.name,
+          };
+        });
+      }
+
+      this._sources = _.filter(Object.keys(Memory.sources), sourceId => Memory.sources[sourceId].roomName === this.name);
+    }
+
+    return this._sources;
+  }
+});
