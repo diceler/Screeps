@@ -29,11 +29,11 @@ function clearMemory() {
 }
 
 function executeLoops() {
-  for (const room in Game.rooms) {
-    Game.rooms[room].loop();
-  }
   for (const creep in Game.creeps) {
     Game.creeps[creep].loop();
+  }
+  for (const room in Game.rooms) {
+    Game.rooms[room].loop();
   }
   for (const structure in Game.structures) {
     Game.structures[structure].loop();
