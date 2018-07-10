@@ -2,6 +2,14 @@ const Harvester = require('role.harvester');
 
 Creep.prototype.loop = function () {
   if (this.spawning) {
+    if (this.memory.linkTo) {
+      const target = Game.getObjectById(this.memory.linkTo);
+
+      if (this.linkTo(target, LINK.HARVESTER) === OK) {
+        delete this.memory.linkTo;
+      }
+    }
+
     return;
   }
 

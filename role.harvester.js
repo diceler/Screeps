@@ -20,12 +20,6 @@ function harvest(creep) {
     if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
       creep.moveTo(source);
     }
-  } else if (creep.memory.linkTo) {
-    const target = Game.getObjectById(creep.memory.linkTo);
-
-    if (creep.linkTo(target, LINK.HARVESTER) === OK) {
-      delete creep.memory.linkTo;
-    }
   } else {
     console.log(`${creep.name} has no Source target. Something went wrong.`);
     creep.suicide();
