@@ -41,19 +41,26 @@ function deliver(creep) {
       case ERR_FULL:
       case OK:
         creep.unlink(deposit);
+        delete creep.memory.ticksOnHold;
         break;
     }
   } else {
-    const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
+    if (_.isUndefined(creep.memory.ticksOnHold) || creep.memory.ticksOnHold <= 0) {
+      const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
 
-    if (_.size(deposits)) {
-      deposit = _.first(deposits);
+      if (_.size(deposits)) {
+        deposit = _.first(deposits);
 
-      if (creep.linkTo(deposit, LINK.DEPOSIT) === OK) {
-        if (creep.transfer(deposit, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(deposit);
+        if (creep.linkTo(deposit, LINK.DEPOSIT) === OK) {
+          if (creep.transfer(deposit, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(deposit);
+          }
         }
+      } else {
+        creep.memory.ticksOnHold = 5;
       }
+    } else {
+      --creep.memory.ticksOnHold;
     }
   }
 }
