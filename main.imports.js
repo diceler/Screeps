@@ -1,5 +1,7 @@
 require('util.keyMirror');
 require('constants');
+require('roomobject.define');
+require('roomobject.extend');
 require('creep.define');
 require('creep.extend');
 require('room.define');
@@ -10,3 +12,4 @@ require('source.define');
 require('source.extend');
 require('structure.define');
 require('structure.extend');
+require('spawn.extend');
