@@ -56,7 +56,7 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
       const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
       const combinedHarvestPower = totalWorkParts * HARVEST_POWER;
 
-      this._isAtFullCapacity = combinedHarvestPower >= 10 || _.size(linkedHarvesters) >= this.memory.capacity;
+      this._isAtFullCapacity = _.size(linkedHarvesters) >= this.memory.capacity || combinedHarvestPower >= 10;
     }
 
     return this._isAtFullCapacity;

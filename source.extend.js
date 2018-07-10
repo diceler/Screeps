@@ -6,10 +6,3 @@ Source.prototype.tick = function () {
     });
   }
 };
-
-Source.prototype.__linkTo = Source.prototype.linkTo;
-Source.prototype.linkTo = function (target, type) {
-  if (Source.prototype.__linkTo(target, type) === OK) {
-    this.memory.capacity = this.memory.capacity - 1;
-  }
-};
