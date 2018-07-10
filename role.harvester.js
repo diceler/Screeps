@@ -45,7 +45,7 @@ function deliver(creep) {
         break;
     }
   } else {
-    if (_.isUndefined(creep.memory.ticksOnHold) || creep.memory.ticksOnHold <= 0) {
+    if (_.isUndefined(creep.memory.ticksOnHold) || creep.memory.ticksOnHold === 0) {
       const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
 
       if (_.size(deposits)) {
