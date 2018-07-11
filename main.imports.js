@@ -14,3 +14,6 @@ require('structure.define');
 require('structure.extend');
 require('spawn.extend');
 require('controller.extend');
+require('flag.define');
+require('flag.extend');
+require('constructionsite.extend');

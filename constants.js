@@ -70,3 +70,44 @@ global.INIT_REQUESTS = {
   [REQUEST.LOW_HEALTH]: [],
   [REQUEST.DEFEND]: [],
 };
+
+/**
+ * Flag constants
+ */
+global.FLAG_TYPE = keyMirror({
+  PLACEHOLDER: null,
+  CONTAINER: null,
+});
+
+ global.FLAG = {
+   [COLOR_RED]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_PURPLE]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_BLUE]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_CYAN]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_GREEN]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_YELLOW]: {
+     [COLOR_WHITE]: FLAG_TYPE.CONTAINER,
+   },
+   [COLOR_ORANGE]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_BROWN]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_GREY]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   },
+   [COLOR_WHITE]: {
+     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+   }
+ };

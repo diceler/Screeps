@@ -1,0 +1,3 @@
+ConstructionSite.prototype.loop = function () {
+  
+};
