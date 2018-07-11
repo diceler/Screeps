@@ -46,8 +46,8 @@ RoomPosition.prototype.lookForInRange = function (type, range) {
   }
 
   _.forEach(lookForAt, tile => {
-    found.concat(new RoomPosition(tile.x, tile.y, tile.roomName).lookFor(type));
+    found.push(new RoomPosition(tile.x, tile.y, tile.roomName).lookFor(type));
   });
 
-  return found;
+  return _.flatten(found);
 };
