@@ -18,27 +18,35 @@ RoomPosition.prototype.sameAs = function (position) {
 };
 
 RoomPosition.prototype.lookForInRange = function (type, range) {
-  const {pos} = this;
-  const lookForAt = [pos];
-  const found = [];
+  range = range + 1; // Zero based. Increase by 1 to avoid mismatch.
+  let pos = this;
+  let lookForAt = [];
+  let found = [];
 
-  for (let i = 1; i < range; i++) {
+  for (let i = 0; i < range; i++) {
     const west = pos.x - i;
-    const east = pos.x + 1;
+    const east = pos.x + i;
     lookForAt.push(new RoomPosition(west, pos.y, pos.roomName));
-    lookForAt.push(new RoomPosition(east, pos.y, pos.roomName));
+
+    // Avoid multiple center pos being processed.
+    if (i > 0)  {
+      lookForAt.push(new RoomPosition(east, pos.y, pos.roomName));
+    }
 
     for (let j = 1; j < range; j++) {
-      lookForAt.push(new RoomPosition(west, pos.y + 1, pos.roomName));
-      lookForAt.push(new RoomPosition(west, pos.y + 1, pos.roomName));
-      lookForAt.push(new RoomPosition(east, pos.y - 1, pos.roomName));
-      lookForAt.push(new RoomPosition(east, pos.y - 1, pos.roomName));
+      lookForAt.push(new RoomPosition(west, pos.y + j, pos.roomName));
+      lookForAt.push(new RoomPosition(west, pos.y - j, pos.roomName));
+
+      // Avoid multiple center pos being processed.
+      if (i > 0) {
+        lookForAt.push(new RoomPosition(east, pos.y + j, pos.roomName));
+        lookForAt.push(new RoomPosition(east, pos.y - j, pos.roomName));
+      }
     }
   }
 
   _.forEach(lookForAt, tile => {
-    found.concat(tile.lookFor(type));
-    new RoomVisual(pos.roomName).rect(tile.x - .5, tile.y - .5, 1, 1, {fill: '#98FB98', opacity: .2});
+    found.concat(new RoomPosition(tile.x, tile.y, tile.roomName).lookFor(type));
   });
 
   return found;
