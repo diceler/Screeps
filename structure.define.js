@@ -54,6 +54,21 @@ Object.defineProperty(Structure.prototype, 'isEmpty', {
   }
 });
 
+Object.defineProperty(Structure.prototype, 'storesEnergy', {
+  configurable: true,
+  get: function () {
+    if (!this._storesEnergy) {
+      if (!this.store) {
+        this._storesEnergy = !!this.energy;
+      } else {
+        this._storesEnergy = (RESOURCE_ENERGY in this.store);
+      }
+    }
+
+    return this._storesEnergy;
+  }
+});
+
 Object.defineProperty(Structure.prototype, 'isWithdrawOnly', {
   configurable: true,
   get: function () {

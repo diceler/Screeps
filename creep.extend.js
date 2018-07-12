@@ -1,4 +1,5 @@
 const Harvester = require('role.harvester');
+const Upgrader = require('role.upgrader');
 
 Creep.prototype.loop = function () {
   if (this.spawning) {
@@ -21,6 +22,9 @@ Creep.prototype.loop = function () {
   switch (this.memory.role) {
     case ROLE.HARVESTER:
       Harvester.tick(this);
+      break;
+    case ROLE.UPGRADER:
+      Upgrader.tick(this);
       break;
     default:
       break;
