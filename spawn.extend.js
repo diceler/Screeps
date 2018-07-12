@@ -23,10 +23,6 @@ function getPendingRequest() {
         pendingRequest = Memory.requests[REQUEST.UPGRADER].shift();
         break;
 
-      case (_.size(Memory.requests[REQUEST.REPAIRER]) > 0):
-        pendingRequest = Memory.requests[REQUEST.REPAIRER].shift();
-        break;
-
       case (_.size(Memory.requests[REQUEST.BUILDER]) > 0):
         pendingRequest = Memory.requests[REQUEST.BUILDER].shift();
         break;

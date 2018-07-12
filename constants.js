@@ -55,7 +55,6 @@ global.REQUEST = keyMirror({
   HAULER: null,
   UPGRADER: null,
   BUILDER: null,
-  REPAIRER: null,
   LOW_ENERGY: null,
   LOW_HEALTH: null,
   DEFEND: null,
@@ -63,7 +62,6 @@ global.REQUEST = keyMirror({
 
 global.INIT_REQUESTS = {
   [REQUEST.UPGRADER]: [],
-  [REQUEST.REPAIRER]: [],
   [REQUEST.BUILDER]: [],
   [REQUEST.HARVESTER]: [],
   [REQUEST.HAULER]: [],
