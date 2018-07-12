@@ -89,14 +89,11 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
         this.memory.maxCapacity = capacity;
       }
 
-      const linkedHarvesters = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {
-        type: LINK.HARVESTER,
-        id: this.id
-      })));
-      // const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
+      const linkedCreeps = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {id: this.id})));
+      // const totalWorkParts = _.sum(linkedCreeps, creep => _.size(_.filter(creep.body, 'type', WORK)));
 
       // this.memory.harvestPerTick = totalWorkParts * HARVEST_POWER;
-      this.memory.capacity = _.size(linkedHarvesters);
+      this.memory.capacity = _.size(linkedCreeps);
       this._isAtFullCapacity = this.memory.capacity >= this.memory.maxCapacity/* || this.memory.harvestPerTick >= MAX_HARVEST_POWER*/;
     }
 
