@@ -59,7 +59,12 @@ function recharge(creep) {
       creep.moveTo(source);
     }
   } else {
-    const source = _.find(creep.room.sources, sourceId => !Game.getObjectById(sourceId).isAtFullCapacity);
+    let source;
+
+    _.some(creep.room.sources, sourceId => {
+      source = Game.getObjectById(sourceId);
+      return source.isAtFullCapacity;
+    });
 
     if (source) {
       if (creep.linkTo(source, LINK.HARVESTER) === OK) {
