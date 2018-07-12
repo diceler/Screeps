@@ -39,7 +39,7 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
   configurable: true,
   get: function () {
     if (_.isUndefined(this._isAtFullCapacity)) {
-      if (_.isUndefined(this.memory.capacity)) {
+      if (_.isUndefined(this.memory.maxCapacity)) {
         let capacity = 0;
         _.forEach([this.pos.x - 1, this.pos.x, this.pos.x + 1], x => {
           _.forEach([this.pos.y - 1, this.pos.y, this.pos.y + 1], y => {
@@ -49,14 +49,25 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
           }, this);
         }, this);
 
-        this.memory.capacity = capacity;
+        this.memory.maxCapacity = capacity;
+        this.memory.ticksToUpdate = 0;
       }
 
-      const linkedHarvesters = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {type: LINK.HARVESTER, id: this.id})));
-      const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
-      const combinedHarvestPower = totalWorkParts * HARVEST_POWER;
+      if (this.memory.ticksToUpdate === 0) {
+        const linkedHarvesters = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {
+          type: LINK.HARVESTER,
+          id: this.id
+        })));
+        const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
 
-      this._isAtFullCapacity = _.size(linkedHarvesters) >= this.memory.capacity || combinedHarvestPower >= 10;
+        this.memory.harvestedPerTick = totalWorkParts * HARVEST_POWER;
+        this.memory.capacity = _.size(linkedHarvesters);
+        this.memory.ticksToUpdate = 10;
+      } else {
+        --this.memory.ticksToUpdate;
+      }
+
+      this._isAtFullCapacity = this.memory.capacity >= this.memory.maxCapacity || this.memory.harvestedPerTick >= MAX_HARVEST_POWER;
     }
 
     return this._isAtFullCapacity;
