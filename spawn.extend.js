@@ -8,7 +8,7 @@ Spawn.prototype.tick = function () {
   if (!_.isUndefined(request)) {
     this.spawnCreep(request.type, {
       role: request.type,
-      linkTo: request.objectId,
+      linkTo: request,
     });
   }
 };

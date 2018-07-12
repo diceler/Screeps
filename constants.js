@@ -32,6 +32,7 @@ global.TERRAIN_WALL = 'wall';
  */
 global.LINK = keyMirror({
   HARVESTER: null,
+  HAULER: null,
   UPGRADER: null,
   DEPOSIT: null,
 });

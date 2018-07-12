@@ -7,6 +7,12 @@ RoomObject.prototype.placeRequest = function (request) {
   }
 };
 
+RoomObject.prototype.deleteMyRequests = function () {
+  _.forEach(Object.keys(Memory.requests), type => {
+    Memory.requests[type] = _.remove(Memory.requests[type], {objectId: this.id});
+  });
+};
+
 RoomObject.prototype.linkTo = function (target, type) {
   if (!target) {
     return ERR_NOT_FOUND;
