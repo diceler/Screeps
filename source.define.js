@@ -67,7 +67,7 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
         --this.memory.ticksToUpdate;
       }
 
-      this._isAtFullCapacity = this.memory.capacity >= this.memory.maxCapacity || this.memory.harvestedPerTick >= MAX_HARVEST_POWER;
+      this._isAtFullCapacity = this.memory.capacity === this.memory.maxCapacity || this.memory.harvestedPerTick >= MAX_HARVEST_POWER;
     }
 
     return this._isAtFullCapacity;
