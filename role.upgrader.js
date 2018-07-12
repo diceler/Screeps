@@ -63,7 +63,7 @@ function recharge(creep) {
 
     _.some(creep.room.sources, sourceId => {
       source = Game.getObjectById(sourceId);
-      return source.isAtFullCapacity;
+      return !source.isAtFullCapacity;
     });
 
     if (source) {
