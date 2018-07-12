@@ -1,12 +1,10 @@
 StructureController.prototype.tick = function () {
-  const allSourcesAtFullCapacity = _.every(this.room.sources, sourceId => Game.getObjectById(sourceId).isAtFullCapacity);
+  const allSourcesGettingHarvested = _.every(this.room.sources, sourceId => Game.getObjectById(sourceId).hasHarvester);
 
-  if (allSourcesAtFullCapacity || this.ticksToDowngrade <= 1000) {
-    if (!this.hasEnoughProgressForRcl) {
-      this.placeRequest({
-        type: REQUEST.UPGRADER,
-        objectId: this.id,
-      });
-    }
+  if ((allSourcesGettingHarvested || this.ticksToDowngrade <= 1000) && !this.hasUpgrader) {
+    this.placeRequest({
+      type: REQUEST.UPGRADER,
+      objectId: this.id,
+    });
   }
 };

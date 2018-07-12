@@ -20,31 +20,31 @@ module.exports = {
 };
 
 function recharge(creep) {
-  let deposit;
-  let linkedDeposit = _.find(creep.links, {type: LINK.DEPOSIT});
+  let storage;
+  let linkedStorage = _.find(creep.links, {type: LINK.STORAGE});
 
-  if (linkedDeposit) {
-    deposit = Game.getObjectById(linkedDeposit.id);
-    const actionResult = creep.withdraw(deposit, RESOURCE_ENERGY);
+  if (linkedStorage) {
+    storage = Game.getObjectById(linkedStorage.id);
+    const actionResult = creep.withdraw(storage, RESOURCE_ENERGY);
 
     switch (actionResult) {
       case ERR_NOT_IN_RANGE:
-        creep.moveTo(deposit);
+        creep.moveTo(storage);
         break;
       case ERR_NOT_ENOUGH_ENERGY:
       case OK:
-        creep.unlink(deposit);
+        creep.unlink(storage);
         break;
     }
   } else {
     const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => structure.storesEnergy && !structure.isEmpty});
 
     if (_.size(deposits)) {
-      deposit = _.first(deposits);
+      storage = _.first(deposits);
 
-      if (creep.linkTo(deposit, LINK.DEPOSIT) === OK) {
-        if (creep.transfer(deposit, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(deposit);
+      if (creep.linkTo(storage, LINK.STORAGE) === OK) {
+        if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+          creep.moveTo(storage);
         }
       }
     }

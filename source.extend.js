@@ -1,5 +1,5 @@
 Source.prototype.tick = function () {
-  if (!this.isAtFullCapacity) {
+  if (!this.hasHarvester) {
     this.placeRequest({
       type: REQUEST.HARVESTER,
       objectId: this.id,

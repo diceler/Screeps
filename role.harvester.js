@@ -27,20 +27,20 @@ function harvest(creep) {
 }
 
 function deliver(creep) {
-  let deposit;
-  let linkedDeposit = _.find(creep.links, {type: LINK.DEPOSIT});
+  let storage;
+  let linkedStorage = _.find(creep.links, {type: LINK.STORAGE});
 
-  if (linkedDeposit) {
-    deposit = Game.getObjectById(linkedDeposit.id);
-    const actionResult = creep.transfer(deposit, RESOURCE_ENERGY);
+  if (linkedStorage) {
+    storage = Game.getObjectById(linkedStorage.id);
+    const actionResult = creep.transfer(storage, RESOURCE_ENERGY);
 
     switch (actionResult) {
       case ERR_NOT_IN_RANGE:
-        creep.moveTo(deposit);
+        creep.moveTo(storage);
         break;
       case ERR_FULL:
       case OK:
-        creep.unlink(deposit);
+        creep.unlink(storage);
         delete creep.memory.ticksOnHold;
         break;
     }
@@ -49,11 +49,11 @@ function deliver(creep) {
       const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
 
       if (_.size(deposits)) {
-        deposit = _.first(deposits);
+        storage = _.first(deposits);
 
-        if (creep.linkTo(deposit, LINK.DEPOSIT) === OK) {
-          if (creep.transfer(deposit, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(deposit);
+        if (creep.linkTo(storage, LINK.STORAGE) === OK) {
+          if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(storage);
           }
         }
       } else {

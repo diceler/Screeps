@@ -34,7 +34,7 @@ global.LINK = keyMirror({
   HARVESTER: null,
   HAULER: null,
   UPGRADER: null,
-  DEPOSIT: null,
+  STORAGE: null,
 });
 
 /**
