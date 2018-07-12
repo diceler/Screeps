@@ -5,7 +5,7 @@ Spawn.prototype.tick = function () {
 
   const request = getPendingRequest();
 
-  if (!_.isUndefined(request)) {
+  if (request) {
     this.spawnCreep(request.type, {
       role: request.type,
       linkTo: request,
@@ -48,7 +48,7 @@ Spawn.prototype.__spawnCreep = Spawn.prototype.spawnCreep;
 Spawn.prototype.spawnCreep = function (role, memory) {
   const body = this.getCreepBody(role);
 
-  if (_.isUndefined(body)) {
+  if (!body) {
     return ERR_NOT_ENOUGH_RESOURCES;
   }
 

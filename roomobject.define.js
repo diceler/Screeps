@@ -1,7 +1,7 @@
 Object.defineProperty(RoomObject.prototype, 'links', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._links)) {
+    if (!this._links) {
       this.memory.links = this.memory.links || [];
       this._links = this.memory.links;
     }
@@ -13,7 +13,7 @@ Object.defineProperty(RoomObject.prototype, 'links', {
 
     const link = _.find(this.memory.links, {id: value.id});
 
-    if (_.isUndefined(link)) {
+    if (!link) {
       this.memory.links.push(value);
     }
   }

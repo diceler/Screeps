@@ -1,7 +1,7 @@
 Object.defineProperty(Structure.prototype, 'memory', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(Memory.structures)) {
+    if (!Memory.structures) {
       Memory.structures = {};
     }
 
@@ -12,7 +12,7 @@ Object.defineProperty(Structure.prototype, 'memory', {
     return Memory.structures[this.id] = Memory.structures[this.id] || {};
   },
   set: function (value) {
-    if (_.isUndefined(Memory.structures)) {
+    if (!Memory.structures) {
       Memory.structures = {};
     }
 
@@ -27,8 +27,8 @@ Object.defineProperty(Structure.prototype, 'memory', {
 Object.defineProperty(Structure.prototype, 'isFull', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._isFull)) {
-      if (_.isUndefined(this.store)) {
+    if (!this._isFull) {
+      if (!this.store) {
         this._isFull = this.energy === this.energyCapacity;
       } else {
         this._isFull = _.sum(this.store) === this.storeCapacity;
@@ -42,8 +42,8 @@ Object.defineProperty(Structure.prototype, 'isFull', {
 Object.defineProperty(Structure.prototype, 'isEmpty', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._isEmpty)) {
-      if (_.isUndefined(this.store)) {
+    if (!this._isEmpty) {
+      if (!this.store) {
         this._isEmpty = this.energy === 0;
       } else {
         this._isEmpty = _.sum(this.store) === 0;
@@ -57,8 +57,8 @@ Object.defineProperty(Structure.prototype, 'isEmpty', {
 Object.defineProperty(Structure.prototype, 'isWithdrawOnly', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._isWithdrawOnly)) {
-      if (_.isUndefined(this.memory.isWithdrawOnly)) {
+    if (!this._isWithdrawOnly) {
+      if (!this.memory.isWithdrawOnly) {
         this.memory.isWithdrawOnly = false;
       }
 

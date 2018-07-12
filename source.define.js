@@ -1,7 +1,7 @@
 Object.defineProperty(Source.prototype, 'memory', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(Memory.sources)) {
+    if (!Memory.sources) {
       Memory.sources = {};
     }
 
@@ -12,7 +12,7 @@ Object.defineProperty(Source.prototype, 'memory', {
     return Memory.sources[this.id] = Memory.sources[this.id] || {};
   },
   set: function (value) {
-    if (_.isUndefined(Memory.sources)) {
+    if (!Memory.sources) {
       Memory.sources = {};
     }
 
@@ -27,7 +27,7 @@ Object.defineProperty(Source.prototype, 'memory', {
 Object.defineProperty(Source.prototype, 'isEmpty', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._isEmpty)) {
+    if (!this._isEmpty) {
       this._isEmpty = this.energy === 0;
     }
 
@@ -38,8 +38,8 @@ Object.defineProperty(Source.prototype, 'isEmpty', {
 Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._isAtFullCapacity)) {
-      if (_.isUndefined(this.memory.maxCapacity)) {
+    if (!this._isAtFullCapacity) {
+      if (!this.memory.maxCapacity) {
         let capacity = 0;
         _.forEach([this.pos.x - 1, this.pos.x, this.pos.x + 1], x => {
           _.forEach([this.pos.y - 1, this.pos.y, this.pos.y + 1], y => {
@@ -54,10 +54,10 @@ Object.defineProperty(Source.prototype, 'isAtFullCapacity', {
       }
 
       if (this.memory.ticksToUpdate === 0) {
-        const linkedHarvesters = _.filter(Game.creeps, creep => !_.isUndefined(_.find(creep.links, {
+        const linkedHarvesters = _.filter(Game.creeps, creep => !!_.find(creep.links, {
           type: LINK.HARVESTER,
           id: this.id
-        })));
+        }));
         const totalWorkParts = _.sum(linkedHarvesters, creep => _.size(_.filter(creep.body, 'type', WORK)));
 
         this.memory.harvestedPerTick = totalWorkParts * HARVEST_POWER;

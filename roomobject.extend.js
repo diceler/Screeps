@@ -24,7 +24,7 @@ RoomObject.prototype.linkTo = function (target, type) {
   }
 
   // Is target linkable?
-  if (_.isUndefined(target.links)) {
+  if (!target.links) {
     return ERR_INVALID_ARGS;
   }
 
@@ -42,7 +42,7 @@ RoomObject.prototype.unlink = function (target) {
   }
 
   // Is target linkable?
-  if (_.isUndefined(target.links)) {
+  if (!target.links) {
     return ERR_INVALID_ARGS;
   }
 
@@ -60,7 +60,7 @@ RoomObject.prototype.unlinkAll = function () {
   _.forEach(clonedLinks, link => {
     const linkedTarget = Game.getObjectById(link.id);
 
-    if (!_.isUndefined(linkedTarget)) {
+    if (linkedTarget) {
       this.unlink(linkedTarget);
     }
   }, this);

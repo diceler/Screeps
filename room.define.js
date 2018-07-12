@@ -1,7 +1,7 @@
 Object.defineProperty(Room.prototype, 'constructionSites', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._constructionSites)) {
+    if (!this._constructionSites) {
       this._constructionSites = _.groupBy(_.filter(Game.constructionSites, {room: {name: this.name}}), 'structureType');
     }
 
@@ -12,7 +12,7 @@ Object.defineProperty(Room.prototype, 'constructionSites', {
 Object.defineProperty(Room.prototype, 'structures', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._structures)) {
+    if (!this._structures) {
       this._structures = _.groupBy(this.find(FIND_STRUCTURES), 'structureType');
     }
 
@@ -23,7 +23,7 @@ Object.defineProperty(Room.prototype, 'structures', {
 Object.defineProperty(Room.prototype, 'creeps', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._creeps)) {
+    if (!this._creeps) {
       this._creeps = _.groupBy(_.filter(Game.creeps, {room: {name: this.name}}), 'memory.role');
     }
 
@@ -34,8 +34,8 @@ Object.defineProperty(Room.prototype, 'creeps', {
 Object.defineProperty(Room.prototype, 'sources', {
   configurable: true,
   get: function () {
-    if (_.isUndefined(this._sources)) {
-      if (_.isUndefined(Memory.sources)) {
+    if (!this._sources) {
+      if (!Memory.sources) {
         Memory.sources = {};
         const sources = _.map(this.find(FIND_SOURCES), source => source.id);
         _.forEach(sources, sourceId => {
