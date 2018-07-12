@@ -78,14 +78,26 @@ global.INIT_REQUESTS = {
 global.FLAG_TYPE = keyMirror({
   PLACEHOLDER: null,
   CONTAINER: null,
+  EXTENSION: null,
+  STORAGE: null,
+  TOWER: null,
+  RAMPART: null,
+  WALL: null,
+  CLAIM: null,
+  REMOTE_HARVEST: null,
 });
 
  global.FLAG = {
+   // Defense
    [COLOR_RED]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_TYPE.TOWER,
+     [COLOR_CYAN]: FLAG_TYPE.RAMPART,
+     [COLOR_GREY]: FLAG_TYPE.WALL,
    },
+   // Expedition
    [COLOR_PURPLE]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_TYPE.CLAIM,
+     [COLOR_YELLOW]: FLAG_TYPE.REMOTE_HARVEST,
    },
    [COLOR_BLUE]: {
      [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
@@ -96,8 +108,11 @@ global.FLAG_TYPE = keyMirror({
    [COLOR_GREEN]: {
      [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
    },
+   // Storage
    [COLOR_YELLOW]: {
      [COLOR_WHITE]: FLAG_TYPE.CONTAINER,
+     [COLOR_BLUE]: FLAG_TYPE.EXTENSION,
+     [COLOR_ORANGE]: FLAG_TYPE.STORAGE,
    },
    [COLOR_ORANGE]: {
      [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
