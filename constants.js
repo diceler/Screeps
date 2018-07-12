@@ -35,6 +35,7 @@ global.LINK = keyMirror({
   HAULER: null,
   UPGRADER: null,
   STORAGE: null,
+  ENERGY_SOURCE: null,
 });
 
 /**

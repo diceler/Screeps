@@ -50,7 +50,7 @@ function recharge(creep) {
   //   }
   // }
 
-  let linkedSource = _.find(creep.links, {type: LINK.UPGRADER});
+  let linkedSource = _.find(creep.links, {type: LINK.ENERGY_SOURCE});
 
   if (linkedSource) {
     const source = Game.getObjectById(linkedSource.id);
@@ -67,7 +67,7 @@ function recharge(creep) {
     });
 
     if (source) {
-      if (creep.linkTo(source, LINK.UPGRADER) === OK) {
+      if (creep.linkTo(source, LINK.ENERGY_SOURCE) === OK) {
         if (creep.harvest === ERR_NOT_IN_RANGE) {
           creep.moveTo(source);
         }
