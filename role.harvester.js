@@ -3,20 +3,35 @@
  */
 module.exports = {
   tick: function (creep) {
-    if (creep.isFull) {
-      let constructionSite;
-      const constructionLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
+    let isEmpty = false;
+    let constructionSite;
+    const constructionLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
 
-      if (constructionLink) {
-        constructionSite = Game.getObjectById(constructionLink.id);
+    if (constructionLink) {
+      constructionSite = Game.getObjectById(constructionLink.id);
+
+      if (creep.memory.building && creep.isEmpty) {
+        creep.memory.building = false;
       }
 
-      if (constructionSite) {
+      if (!creep.memory.building && creep.isFull) {
+        creep.memory.building = true;
+      }
+
+      if (creep.memory.building) {
         creep.build(constructionSite)
       } else {
-        deliver(creep);
+        isEmpty = true;
       }
     } else {
+      if (creep.isFull) {
+        deliver(creep);
+      } else {
+        isEmpty = true;
+      }
+    }
+
+    if (isEmpty) {
       harvest(creep);
     }
   }
