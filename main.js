@@ -27,9 +27,22 @@ function clearMemory() {
       delete Memory.flags[flag];
     }
   }
+  for (const structure in Memory.structures) {
+    if (!Game.structures[structure]) {
+      delete Memory.structures[structure];
+    }
+  }
+  for (const constructionSite in Memory.constructionSites) {
+    if (!Game.constructionSites[constructionSite]) {
+      delete Memory.constructionSites[constructionSite];
+    }
+  }
 }
 
 function executeLoops() {
+  for (const flag in Memory.flags) {
+    Game.rooms[flag].loop();
+  }
   for (const creep in Game.creeps) {
     Game.creeps[creep].loop();
   }
@@ -41,8 +54,5 @@ function executeLoops() {
   }
   // for (const constructionSite in Memory.constructionSitea) {
   //   Game.rooms[constructionSite].loop();
-  // }
-  // for (const flag in Memory.flags) {
-  //   Game.rooms[flag].loop();
   // }
 }

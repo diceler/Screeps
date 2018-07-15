@@ -4,6 +4,7 @@
 module.exports = {
   tick: function (creep) {
     if (creep.isFull) {
+      // TODO: Implement lookup for construction links.
       deliver(creep);
     } else {
       harvest(creep);
@@ -45,12 +46,13 @@ function deliver(creep) {
     const linkedSourceStorage = _.find(linkedSource.links, {type: LINK.STORAGE});
 
     if (!linkedSourceStorage) {
-      console.log('No linked storage to source found');
-      const flagsFound = creep.pos.lookFor(LOOK_FLAGS);
+      const constructionSitesFound = creep.pos.lookFor(LOOK_CONSTRUCTION_SITES);
 
-      if (!_.size(flagsFound)) {
-        console.log('No flags found');
-        creep.pos.createFlag(_.uniqueId('Flag'), COLOR_YELLOW, COLOR_WHITE);
+      if (!_.size(constructionSitesFound)) {
+        creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
+      } else {
+        const constructionSite = _.first(constructionSitesFound);
+        creep.linkTo(constructionSite, LINK.CONSTRUCTION);
       }
     }
 

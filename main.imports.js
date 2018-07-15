@@ -17,4 +17,5 @@ require('controller.extend');
 require('controller.define');
 require('flag.define');
 require('flag.extend');
+require('constructionsite.define');
 require('constructionsite.extend');
