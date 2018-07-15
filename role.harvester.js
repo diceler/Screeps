@@ -4,11 +4,10 @@
 module.exports = {
   tick: function (creep) {
     let isEmpty = false;
-    let constructionSite;
     const constructionLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
 
     if (constructionLink) {
-      constructionSite = Game.getObjectById(constructionLink.id);
+      const constructionSite = Game.getObjectById(constructionLink.id);
 
       if (creep.memory.building && creep.isEmpty) {
         creep.memory.building = false;
@@ -71,13 +70,21 @@ function deliver(creep) {
     const linkedSourceStorage = _.find(linkedSource.links, {type: LINK.STORAGE});
 
     if (!linkedSourceStorage) {
-      const constructionSitesFound = creep.pos.lookFor(LOOK_CONSTRUCTION_SITES);
+      const linkedSourceConstruction = _.find(linkedSource.links, {type: LINK.CONSTRUCTION});
 
-      if (!_.size(constructionSitesFound)) {
-        creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
-      } else {
-        const constructionSite = _.first(constructionSitesFound);
+      if (linkedSourceConstruction) {
+        const constructionSite = Game.getObjectById(linkedSourceConstruction.id);
         creep.linkTo(constructionSite, LINK.CONSTRUCTION);
+      } else {
+        const constructionSitesFound = creep.pos.lookFor(LOOK_CONSTRUCTION_SITES);
+
+        if (!_.size(constructionSitesFound)) {
+          creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
+        } else {
+          const constructionSite = _.first(constructionSitesFound);
+          creep.linkTo(constructionSite, LINK.CONSTRUCTION);
+          linkedSource.linkTo(constructionSite, LINK.CONSTRUCTION);
+        }
       }
     }
 
