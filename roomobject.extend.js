@@ -15,7 +15,7 @@ RoomObject.prototype.deleteMyRequests = function () {
 
 RoomObject.prototype.linkTo = function (target, type, data) {
   if (!target) {
-    return ERR_NOT_FOUND;
+    return ERR_INVALID_TARGET;
   }
 
   // Are we already linked?
@@ -37,7 +37,11 @@ RoomObject.prototype.linkTo = function (target, type, data) {
 };
 
 RoomObject.prototype.unlink = function (target) {
-  if (!target || !_.find(this.links, {id: target.id})) {
+  if (!target) {
+    return ERR_INVALID_TARGET;
+  }
+
+  if (!_.find(this.links, {id: target.id})) {
     return ERR_NOT_FOUND;
   }
 
@@ -64,4 +68,14 @@ RoomObject.prototype.unlinkAll = function () {
       this.unlink(linkedTarget);
     }
   }, this);
+};
+
+RoomObject.prototype.pruneLink = function (linkId) {
+  if (!linkId) {
+    return ERR_INVALID_ARGS;
+  }
+
+  this.links = _.reject(this.links, {id: linkId});
+
+  return OK;
 };
