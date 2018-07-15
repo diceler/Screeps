@@ -97,9 +97,12 @@ function deliver(creep) {
         creep.linkTo(flag, LINK.CONSTRUCTION_OBSERVER);
         creep.linkTo(constructionSite, LINK.CONSTRUCTION);
       } else {
-        if (!_.size(creep.pos.lookFor(LOOK_FLAGS))) {
-          const containerFlagName = creep.pos.createFlag(null, COLOR_YELLOW, COLOR_WHITE);
-          const containerFlag = Game.flags[containerFlagName];
+        const foundFlags = creep.pos.lookFor(LOOK_FLAGS);
+
+        if (!_.size(foundFlags)) {
+          creep.pos.createFlag(null, COLOR_YELLOW, COLOR_WHITE);
+        } else {
+          const containerFlag = _.first(foundFlags);
           creep.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
           linkedSource.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
         }
