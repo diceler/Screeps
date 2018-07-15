@@ -40,7 +40,7 @@ function clearMemory() {
 }
 
 function executeLoops() {
-  for (const flag in Memory.flags) {
+  for (const flag in Game.flags) {
     Game.rooms[flag].loop();
   }
   for (const creep in Game.creeps) {
