@@ -15,6 +15,7 @@ Flag.prototype.loop = function () {
 function containerFlag(flag) {
   if (!_.size(flag.links)) {
     console.log('No links yet.');
+    return;
   }
 
   const observerLinks = _.filter(flag.links, {type: LINK.CONSTRUCTION_OBSERVER});

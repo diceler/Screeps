@@ -3,154 +3,87 @@
  */
 module.exports = {
   tick: function (creep) {
-    const constructionLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
+    if (creep.isFull) {
+      let constSiteLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
 
-    if (constructionLink) {
-      build(creep, constructionLink);
-    } else {
-      if (creep.isFull) {
-        deliver(creep);
+      if (constSiteLink) {
+        build(creep, constSiteLink);
       } else {
-        harvest(creep);
+        if (_.some(creep.links, {type: LINK.STORAGE})) {
+          deliver(creep);
+        } else {
+          findStorage(creep);
+        }
       }
-    }
 
-    // let isEmpty = false;
-    // const constructionLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
-    //
-    // if (constructionLink) {
-    //   const constructionSite = Game.getObjectById(constructionLink.id);
-    //
-    //   if (constructionSite) {
-    //     if (creep.memory.building && creep.isEmpty) {
-    //       creep.memory.building = false;
-    //     }
-    //
-    //     if (!creep.memory.building && creep.isFull) {
-    //       creep.memory.building = true;
-    //     }
-    //
-    //     if (creep.memory.building) {
-    //       creep.build(constructionSite)
-    //     } else {
-    //       isEmpty = true;
-    //     }
-    //   } else {
-    //     const container = _.find(creep.pos.lookFor(LOOK_STRUCTURES), {structureType: STRUCTURE_CONTAINER});
-    //
-    //     if (container) {
-    //       creep.linkTo(container, LINK.STORAGE);
-    //     } else {
-    //       deliver(creep);
-    //     }
-    //   }
-    // } else {
-    //   if (creep.isFull) {
-    //     deliver(creep);
-    //   } else {
-    //     isEmpty = true;
-    //   }
-    // }
-    //
-    // if (isEmpty) {
-    //   harvest(creep);
-    // }
+    } else {
+      harvest(creep);
+    }
   }
 };
 
-function harvest(creep) {
-  // LINK.HARVESTER should always exist at this point.
-  // If not, something went wrong in the request.
-  const linkedSource = Game.getObjectById(_.find(creep.links, {type: LINK.HARVESTER}).id);
+function build(creep, link) {
+  let constSite = Game.getObjectById(link.id);
 
-  if (creep.harvest(linkedSource) === ERR_NOT_IN_RANGE) {
-    creep.moveTo(linkedSource);
+  if (creep.memory.building && creep.isEmpty) {
+    creep.memory.building = false;
+  }
+
+  if (!creep.memory.building && creep.isFull) {
+    creep.memory.building = true;
+  }
+
+  if (creep.memory.building) {
+    creep.build(constSite);
+  } else {
+    harvest(creep);
+  }
+}
+
+function harvest(creep) {
+  let source = Game.getObjectById(_.find(creep.links, {type: LINK.HARVESTER}).id);
+
+  if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+    creep.moveTo(source);
   }
 }
 
 function deliver(creep) {
-  const linkedStorage = _.find(creep.links, {type: LINK.STORAGE});
+  let storage = Game.getObjectById(_.find(creep.links, {type: LINK.STORAGE}).id);
+  let actionResult = creep.transfer(storage, RESOURCE_ENERGY);
 
-  if (linkedStorage) {
-    let storage = Game.getObjectById(linkedStorage.id);
-    const actionResult = creep.transfer(storage, RESOURCE_ENERGY);
-
-    switch (actionResult) {
-      case ERR_NOT_IN_RANGE:
-        creep.moveTo(storage);
-        break;
-      case ERR_FULL:
-      case OK:
-        creep.unlink(storage);
-        // delete creep.memory.ticksOnHold;
-        break;
-    }
-  } else {
-    const linkedSource = Game.getObjectById(_.find(creep.links, {type: LINK.HARVESTER}).id);
-    const linkedSourceStorage = _.find(linkedSource.links, {type: LINK.STORAGE});
-
-    if (!linkedSourceStorage) {
-      if (_.some(linkedSource.links, {type: LINK.CONSTRUCTION})) {
-        const flag = _.find(linkedSource.links, {type: LINK.CONSTRUCTION_OBSERVER});
-        const constructionSite = _.find(linkedSource.links, {type: LINK.CONSTRUCTION});
-
-        creep.linkTo(flag, LINK.CONSTRUCTION_OBSERVER);
-        creep.linkTo(constructionSite, LINK.CONSTRUCTION);
-      } else {
-        if (!_.some(creep.links, {type: LINK.CONSTRUCTION_OBSERVER})) {
-          const foundFlags = creep.pos.lookFor(LOOK_FLAGS);
-
-          if (!_.size(foundFlags)) {
-            creep.pos.createFlag(null, COLOR_YELLOW, COLOR_WHITE);
-          } else {
-            const containerFlag = _.first(foundFlags);
-            creep.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
-            linkedSource.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
-          }
-        }
-      }
-
-      // const linkedSourceConstruction = _.find(linkedSource.links, {type: LINK.CONSTRUCTION});
-      //
-      // if (linkedSourceConstruction) {
-      //   const constructionSite = Game.getObjectById(linkedSourceConstruction.id);
-      //   creep.linkTo(constructionSite, LINK.CONSTRUCTION);
-      // } else {
-      //   const constructionSitesFound = creep.pos.lookFor(LOOK_CONSTRUCTION_SITES);
-      //
-      //   if (!_.size(constructionSitesFound)) {
-      //     creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
-      //   } else {
-      //     const constructionSite = _.first(constructionSitesFound);
-      //     creep.linkTo(constructionSite, LINK.CONSTRUCTION);
-      //     linkedSource.linkTo(constructionSite, LINK.CONSTRUCTION);
-      //   }
-      // }
-    } else {
-      creep.linkTo(linkedSourceStorage, LINK.STORAGE);
-    }
+  switch (actionResult) {
+    case ERR_NOT_IN_RANGE:
+      creep.moveTo(storage);
+      break;
+    case ERR_FULL:
+    case OK:
+      creep.unlink(storage);
+      break;
   }
 }
 
-function build(creep, link) {
-  const constructionSite = Game.getObjectById(link.id);
+function findStorage(creep) {
+  let source = Game.getObjectById(_.find(creep.links, {type: LINK.HARVESTER}).id);
 
-  if (constructionSite) {
-    if (creep.memory.building && creep.isEmpty) {
-      creep.memory.building = false;
-    }
+  if (_.some(source.links, {type: LINK.STORAGE})) {
 
-    if (!creep.memory.building && creep.isFull) {
-      creep.memory.building = true;
-    }
+    creep.linkTo(Game.getObjectById(_.find(source.links, {type: LINK.STORAGE}).id));
 
-    if (creep.memory.building) {
-      creep.build(constructionSite);
-    } else {
-      harvest(creep);
-    }
   } else {
-    console.log(`${link.id} couldn't be found. Pruned dead link.`);
-    creep.pruneLink(link.id);
+    if (_.some(source.links, {type: LINK.CONSTRUCTION})) {
+
+      creep.linkTo(Game.getObjectById(_.find(source.links, {type: LINK.CONSTRUCTION}).id), LINK.CONSTRUCTION);
+      let flag = _.find(source.links, {type: LINK.CONSTRUCTION_OBSERVER});
+      creep.linkTo(Game.flags[flag.data.flagName], LINK.CONSTRUCTION_OBSERVER, flag.data);
+
+    } else if (!_.some(creep.pos.lookFor(LOOK_FLAGS))) {
+
+      let flagName = creep.pos.createFlag(null, COLOR_YELLOW, COLOR_WHITE);
+      let flag = Game.flags[flagName];
+      flag.linkTo(creep, LINK.CONSTRUCTION_OBSERVER, {flagName});
+      flag.linkTo(source, LINK.CONSTRUCTION_OBSERVER, {flagName});
+
+    }
   }
 }
