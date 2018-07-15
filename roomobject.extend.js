@@ -13,7 +13,7 @@ RoomObject.prototype.deleteMyRequests = function () {
   });
 };
 
-RoomObject.prototype.linkTo = function (target, type) {
+RoomObject.prototype.linkTo = function (target, type, data) {
   if (!target) {
     return ERR_NOT_FOUND;
   }
@@ -29,9 +29,9 @@ RoomObject.prototype.linkTo = function (target, type) {
   }
 
   // Link target to me
-  this.links = {type, id: target.id};
+  this.links = {type, id: target.id, data};
   // Link me to target
-  target.links = {type, id: this.id};
+  target.links = {type, id: this.id, data};
 
   return OK;
 };

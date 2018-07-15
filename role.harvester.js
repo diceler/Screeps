@@ -12,23 +12,18 @@ module.exports = {
 };
 
 function harvest(creep) {
-  let linkedSource = _.find(creep.links, {type: LINK.HARVESTER});
+  // LINK.HARVESTER should always exist at this point.
+  // If not, something went wrong in the request.
+  const linkedSource = Game.getObjectById(_.find(creep.links, {type: LINK.HARVESTER}).id);
 
-  if (linkedSource) {
-    const source = Game.getObjectById(linkedSource.id);
-
-    if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(source);
-    }
-  } else {
-    console.log(`${creep.name} has no Source target. Something went wrong.`);
-    creep.suicide();
+  if (creep.harvest(linkedSource) === ERR_NOT_IN_RANGE) {
+    creep.moveTo(linkedSource);
   }
 }
 
 function deliver(creep) {
   let storage;
-  let linkedStorage = _.find(creep.links, {type: LINK.STORAGE});
+  const linkedStorage = _.find(creep.links, {type: LINK.STORAGE});
 
   if (linkedStorage) {
     storage = Game.getObjectById(linkedStorage.id);
@@ -41,26 +36,58 @@ function deliver(creep) {
       case ERR_FULL:
       case OK:
         creep.unlink(storage);
-        delete creep.memory.ticksOnHold;
+        // delete creep.memory.ticksOnHold;
         break;
     }
   } else {
-    if (!creep.memory.ticksOnHold || creep.memory.ticksOnHold === 0) {
-      const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
 
-      if (_.size(deposits)) {
-        storage = _.first(deposits);
+    const linkedSource = Game.getObjectById(_.find(creep.links, {type: LINK.HARVESTER}).id);
+    const linkedSourceStorage = _.find(linkedSource.links, {type: LINK.STORAGE});
 
-        if (creep.linkTo(storage, LINK.STORAGE) === OK) {
-          if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(storage);
-          }
-        }
-      } else {
-        creep.memory.ticksOnHold = 5;
+    if (!linkedSourceStorage) {
+      console.log('No linked storage to source found');
+      const flagsFound = creep.pos.lookFor(LOOK_FLAGS);
+
+      if (!_.size(flagsFound)) {
+        console.log('No flags found');
+        creep.pos.createFlag(_.uniqueId('Flag'), COLOR_YELLOW, COLOR_WHITE);
       }
-    } else {
-      --creep.memory.ticksOnHold;
     }
+
+
+    // if (linkedSourceStorage) {
+    //
+    //   if (!linkedSourceStorage.data.isConstructionSite) {
+    //     const storage = Game.getObjectById(linkedSourceStorage.id);
+    //
+    //     // #TODO: Implement safegaurd that deletes the dead-end link.
+    //
+    //     if (creep.linkTo(storage, LINK.STORAGE) === OK) {
+    //       if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+    //         creep.moveTo(storage);
+    //       }
+    //     }
+    //   }
+    //
+    // }
+
+    //   if (!creep.memory.ticksOnHold || creep.memory.ticksOnHold === 0) {
+    //     const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
+    //
+    //     if (_.size(deposits)) {
+    //       storage = _.first(deposits);
+    //
+    //       if (creep.linkTo(storage, LINK.STORAGE) === OK) {
+    //         if (creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+    //           creep.moveTo(storage);
+    //         }
+    //       }
+    //     } else {
+    //       creep.memory.ticksOnHold = 5;
+    //     }
+    //   } else {
+    //     --creep.memory.ticksOnHold;
+    //   }
+    // }
   }
 }
