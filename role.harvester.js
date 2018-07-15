@@ -97,14 +97,16 @@ function deliver(creep) {
         creep.linkTo(flag, LINK.CONSTRUCTION_OBSERVER);
         creep.linkTo(constructionSite, LINK.CONSTRUCTION);
       } else {
-        const foundFlags = creep.pos.lookFor(LOOK_FLAGS);
+        if (!_.some(creep.links, {type: LINK.CONSTRUCTION_OBSERVER})) {
+          const foundFlags = creep.pos.lookFor(LOOK_FLAGS);
 
-        if (!_.size(foundFlags)) {
-          creep.pos.createFlag(null, COLOR_YELLOW, COLOR_WHITE);
-        } else {
-          const containerFlag = _.first(foundFlags);
-          creep.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
-          linkedSource.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
+          if (!_.size(foundFlags)) {
+            creep.pos.createFlag(null, COLOR_YELLOW, COLOR_WHITE);
+          } else {
+            const containerFlag = _.first(foundFlags);
+            creep.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
+            linkedSource.linkTo(containerFlag, LINK.CONSTRUCTION_OBSERVER);
+          }
         }
       }
 
