@@ -4,7 +4,12 @@
 module.exports = {
   tick: function (creep) {
     if (creep.isFull) {
-      const constructionSite = _.find(creep.links, {type: LINK.CONSTRUCTION});
+      let constructionSite;
+      const constructionLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
+
+      if (constructionLink) {
+        constructionSite = Game.getObjectById(constructionLink.id);
+      }
 
       if (constructionSite) {
         creep.build(constructionSite)
