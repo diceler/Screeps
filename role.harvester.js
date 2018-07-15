@@ -4,8 +4,13 @@
 module.exports = {
   tick: function (creep) {
     if (creep.isFull) {
-      // TODO: Implement lookup for construction links.
-      deliver(creep);
+      const constructionSite = _.find(creep.links, {type: LINK.CONSTRUCTION});
+
+      if (constructionSite) {
+        creep.build(constructionSite)
+      } else {
+        deliver(creep);
+      }
     } else {
       harvest(creep);
     }
@@ -56,7 +61,6 @@ function deliver(creep) {
       }
     }
 
-
     // if (linkedSourceStorage) {
     //
     //   if (!linkedSourceStorage.data.isConstructionSite) {
@@ -72,7 +76,6 @@ function deliver(creep) {
     //   }
     //
     // }
-
     //   if (!creep.memory.ticksOnHold || creep.memory.ticksOnHold === 0) {
     //     const deposits = creep.room.find(FIND_STRUCTURES, {filter: structure => !structure.isFull && !structure.isWithdrawOnly});
     //
