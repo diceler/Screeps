@@ -3,21 +3,22 @@
  */
 module.exports = {
   tick: function (creep) {
-    if (creep.isFull) {
-      let constSiteLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
 
-      if (constSiteLink) {
-        build(creep, constSiteLink);
-      } else {
+    let constSiteLink = _.find(creep.links, {type: LINK.CONSTRUCTION});
+
+    if (constSiteLink) {
+      build(creep, constSiteLink);
+    } else {
+      if (creep.isFull) {
         if (_.some(creep.links, {type: LINK.STORAGE})) {
           deliver(creep);
         } else {
           findStorage(creep);
         }
       }
-
-    } else {
-      harvest(creep);
+      else {
+        harvest(creep);
+      }
     }
   }
 };
