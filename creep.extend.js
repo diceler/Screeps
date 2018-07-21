@@ -16,7 +16,7 @@ Creep.prototype.loop = function () {
 
   if (this.ticksToLive === 1) {
     this.unlinkAll();
-    this.deleteMyRequests();
+    this.deleteRequests();
   }
 
   switch (this.memory.role) {

@@ -1,3 +1,4 @@
+require('util.global');
 require('util.keyMirror');
 require('constants');
 require('roomobject.define');

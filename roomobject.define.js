@@ -11,7 +11,7 @@ Object.defineProperty(RoomObject.prototype, 'links', {
   set: function (value) {
     this.memory.links = this.memory.links || [];
 
-    const link = _.find(this.memory.links, {id: value.id});
+    const link = _.find(this.memory.links, {id: value.id || value.name});
 
     if (!link) {
       this.memory.links.push(value);

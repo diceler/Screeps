@@ -7,7 +7,7 @@ RoomObject.prototype.placeRequest = function (request) {
   }
 };
 
-RoomObject.prototype.deleteMyRequests = function () {
+RoomObject.prototype.deleteRequests = function () {
   _.forEach(Object.keys(Memory.requests), type => {
     Memory.requests[type] = _.remove(Memory.requests[type], {objectId: this.id});
   });
@@ -19,7 +19,7 @@ RoomObject.prototype.linkTo = function (target, type, data) {
   }
 
   // Are we already linked?
-  if (_.find(this.links, {id: target.id})) {
+  if (_.find(this.links, {id: target.id || target.name})) {
     return OK;
   }
 
@@ -29,9 +29,9 @@ RoomObject.prototype.linkTo = function (target, type, data) {
   }
 
   // Link target to me
-  this.links = {type, id: target.id, data};
+  this.links = {type, id: target.id || target.name, data};
   // Link me to target
-  target.links = {type, id: this.id, data};
+  target.links = {type, id: this.id || this.name, data};
 
   return OK;
 };
@@ -41,7 +41,7 @@ RoomObject.prototype.unlink = function (target) {
     return ERR_INVALID_TARGET;
   }
 
-  if (!_.find(this.links, {id: target.id})) {
+  if (!_.find(this.links, {id: target.id || target.name})) {
     return ERR_NOT_FOUND;
   }
 
@@ -51,9 +51,9 @@ RoomObject.prototype.unlink = function (target) {
   }
 
   // Unlink target from me
-  this.memory.links = _.reject(this.links, {id: target.id});
+  this.memory.links = _.reject(this.links, {id: target.id || target.name});
   // Unlink me from target
-  target.memory.links = _.reject(target.links, {id: this.id});
+  target.memory.links = _.reject(target.links, {id: this.id} || this.name);
 
   return OK;
 };
@@ -62,7 +62,7 @@ RoomObject.prototype.unlinkAll = function () {
   const clonedLinks = _.clone(this.links);
 
   _.forEach(clonedLinks, link => {
-    const linkedTarget = Game.getObjectById(link.id);
+    const linkedTarget = getObjectById(link.id);
 
     if (linkedTarget) {
       this.unlink(linkedTarget);
