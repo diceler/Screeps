@@ -82,8 +82,8 @@ function findStorage(creep) {
 
       let flagName = creep.pos.createFlag(null, COLOR_YELLOW, COLOR_WHITE);
       let flag = Game.flags[flagName];
-      flag.linkTo(creep, LINK.CONSTRUCTION_OBSERVER, {flagName});
-      flag.linkTo(source, LINK.CONSTRUCTION_OBSERVER, {flagName});
+      flag.linkTo(creep, LINK.CONSTRUCTION_OBSERVER);
+      flag.linkTo(source, LINK.CONSTRUCTION_OBSERVER);
 
     }
   }
