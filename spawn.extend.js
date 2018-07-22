@@ -68,8 +68,7 @@ Spawn.prototype.canCreateCreep = function (body) {
 };
 
 Spawn.prototype.generateCreepName = function (role) {
-  const randomNumber = Math.round(Math.random() * 100);
-  const creepName = `${this.room.name}_${role}_${randomNumber}`;
+  const creepName = `${this.room.name}_${ROLE_ABBR[role]}_${Game.time}`;
 
   if (Game.creeps[creepName]) {
     return this.generateCreepName(role);

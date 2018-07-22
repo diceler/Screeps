@@ -50,6 +50,13 @@ global.ROLE = keyMirror({
   BUILDER: null,
 });
 
+global.ROLE_ABBR = {
+  [ROLE.HARVESTER]: 'HRV',
+  [ROLE.HAULER]: 'HLR',
+  [ROLE.UPGRADER]: 'UPG',
+  [ROLE.BUILDER]: 'BLD',
+};
+
 /**
  * Request constants.
  */
