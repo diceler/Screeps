@@ -13,7 +13,7 @@ require('roomobject.extend');
 // require('source.extend');
 require('structure.define');
 require('structure.extend');
-// require('spawn.extend');
+require('spawn.extend');
 // require('controller.extend');
 // require('controller.define');
 // require('flag.define');
