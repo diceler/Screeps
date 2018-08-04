@@ -34,7 +34,7 @@ Spawn.prototype.spawnCreep = function (role, memory) {
     return ERR_NOT_ENOUGH_RESOURCES;
   }
 
-  return this.__spawnCreep(body, `${role.substring(4)}_${Game.time}`, {memory});
+  return this.__spawnCreep(body, `${role.substring(5)}_${Game.time}`, {memory});
 };
 
 Spawn.prototype.getCreepBody = function (role) {
