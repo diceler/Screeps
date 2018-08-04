@@ -1,7 +1,7 @@
 require('main.imports');
 
 module.exports.loop = () => {
-  Memory.requests = Memory.requests || INIT_REQUESTS;
+  Memory.requests = Memory.requests || [];
   clearMemory();
   executeLoops();
 };

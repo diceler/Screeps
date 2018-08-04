@@ -30,108 +30,107 @@ global.TERRAIN_WALL = 'wall';
 /**
  * Object link constants.
  */
-global.LINK = keyMirror({
-  HARVESTER: null,
-  HAULER: null,
-  UPGRADER: null,
-  STORAGE: null,
-  ENERGY_SOURCE: null,
-  CONSTRUCTION: null,
-  CONSTRUCTION_OBSERVER: null,
+const linkTypes = keyMirror({
+  LINK_HARVESTER: null,
+  LINK_HAULER: null,
+  LINK_UPGRADER: null,
+  LINK_STORAGE: null,
+  LINK_ENERGY_SOURCE: null,
+  LINK_CONSTRUCTION: null,
+  LINK_CONSTRUCTION_OBSERVER: null,
+});
+
+_.forEach(Object.keys(linkTypes), (key) => {
+  global[key] = key;
 });
 
 /**
  * Role constants.
  */
-global.ROLE = keyMirror({
-  HARVESTER: null,
-  HAULER: null,
-  UPGRADER: null,
-  BUILDER: null,
+const roles = keyMirror({
+  ROLE_HARVESTER: null,
+  ROLE_HAULER: null,
+  ROLE_UPGRADER: null,
+  ROLE_BUILDER: null,
 });
 
-global.ROLE_ABBR = {
-  [ROLE.HARVESTER]: 'HRV',
-  [ROLE.HAULER]: 'HLR',
-  [ROLE.UPGRADER]: 'UPG',
-  [ROLE.BUILDER]: 'BLD',
-};
+_.forEach(Object.keys(roles), (key) => {
+  global[key] = key;
+});
 
 /**
  * Request constants.
  */
-global.REQUEST = keyMirror({
-  HARVESTER: null,
-  HAULER: null,
-  UPGRADER: null,
-  BUILDER: null,
-  LOW_ENERGY: null,
-  LOW_HEALTH: null,
-  DEFEND: null,
+const requestTypes = keyMirror({
+  REQUEST_HARVESTER: null,
+  REQUEST_HAULER: null,
+  REQUEST_UPGRADER: null,
+  REQUEST_BUILDER: null,
+  REQUEST_LOW_ENERGY: null,
+  REQUEST_LOW_HEALTH: null,
+  REQUEST_DEFEND: null,
 });
 
-global.INIT_REQUESTS = {
-  [REQUEST.UPGRADER]: [],
-  [REQUEST.BUILDER]: [],
-  [REQUEST.HARVESTER]: [],
-  [REQUEST.HAULER]: [],
-  [REQUEST.LOW_ENERGY]: [],
-  [REQUEST.LOW_HEALTH]: [],
-  [REQUEST.DEFEND]: [],
-};
+_.forEach(Object.keys(requestTypes), (key) => {
+  global[key] = key;
+});
 
 /**
  * Flag constants
  */
-global.FLAG_TYPE = keyMirror({
-  PLACEHOLDER: null,
-  CONTAINER: null,
-  EXTENSION: null,
-  STORAGE: null,
-  TOWER: null,
-  RAMPART: null,
-  WALL: null,
-  CLAIM: null,
-  REMOTE_HARVEST: null,
+const flagTypes = keyMirror({
+  FLAG_PLACEHOLDER: null,
+  FLAG_CONTAINER: null,
+  FLAG_EXTENSION: null,
+  FLAG_STORAGE: null,
+  FLAG_TOWER: null,
+  FLAG_RAMPART: null,
+  FLAG_WALL: null,
+  FLAG_CLAIM: null,
+  FLAG_REMOTE_HARVEST: null,
+});
+
+_.forEach(Object.keys(flagTypes), (key) => {
+  global[key] = key;
 });
 
  global.FLAG = {
    // Defense
    [COLOR_RED]: {
-     [COLOR_WHITE]: FLAG_TYPE.TOWER,
-     [COLOR_CYAN]: FLAG_TYPE.RAMPART,
-     [COLOR_GREY]: FLAG_TYPE.WALL,
+     [COLOR_WHITE]: FLAG_TOWER,
+     [COLOR_CYAN]: FLAG_RAMPART,
+     [COLOR_GREY]: FLAG_WALL,
    },
    // Expedition
    [COLOR_PURPLE]: {
-     [COLOR_WHITE]: FLAG_TYPE.CLAIM,
-     [COLOR_YELLOW]: FLAG_TYPE.REMOTE_HARVEST,
+     [COLOR_WHITE]: FLAG_CLAIM,
+     [COLOR_YELLOW]: FLAG_REMOTE_HARVEST,
    },
    [COLOR_BLUE]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_CYAN]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_GREEN]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    // Storage
    [COLOR_YELLOW]: {
-     [COLOR_WHITE]: FLAG_TYPE.CONTAINER,
-     [COLOR_BLUE]: FLAG_TYPE.EXTENSION,
-     [COLOR_ORANGE]: FLAG_TYPE.STORAGE,
+     [COLOR_WHITE]: FLAG_CONTAINER,
+     [COLOR_BLUE]: FLAG_EXTENSION,
+     [COLOR_ORANGE]: FLAG_STORAGE,
    },
    [COLOR_ORANGE]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_BROWN]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_GREY]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_WHITE]: {
-     [COLOR_WHITE]: FLAG_TYPE.PLACEHOLDER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    }
  };

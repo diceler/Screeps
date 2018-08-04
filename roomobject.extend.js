@@ -1,18 +1,3 @@
-RoomObject.prototype.placeRequest = function (request) {
-  let requestType = Memory.requests[request.type];
-  const {type, objectId} = request;
-
-  if (!_.find(requestType, {type, objectId})) {
-    requestType.push(request);
-  }
-};
-
-RoomObject.prototype.deleteRequests = function () {
-  _.forEach(Object.keys(Memory.requests), type => {
-    Memory.requests[type] = _.remove(Memory.requests[type], {objectId: this.id});
-  });
-};
-
 RoomObject.prototype.linkTo = function (target, type, data) {
   if (!target) {
     return ERR_INVALID_TARGET;
@@ -68,14 +53,4 @@ RoomObject.prototype.unlinkAll = function () {
       this.unlink(linkedTarget);
     }
   }, this);
-};
-
-RoomObject.prototype.pruneLink = function (linkId) {
-  if (!linkId) {
-    return ERR_INVALID_ARGS;
-  }
-
-  this.links = _.reject(this.links, {id: linkId});
-
-  return OK;
 };
