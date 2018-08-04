@@ -20,7 +20,7 @@ Spawn.prototype.tick = function () {
     if (role) {
       this.spawnCreep(role, {
         role,
-        linkTo: request.targetId,
+        linkTo: request,
       });
     }
   }
@@ -34,7 +34,7 @@ Spawn.prototype.spawnCreep = function (role, memory) {
     return ERR_NOT_ENOUGH_RESOURCES;
   }
 
-  return this.__spawnCreep(body, `${role}_${Game.time}`, {memory});
+  return this.__spawnCreep(body, `${role.substring(4)}_${Game.time}`, {memory});
 };
 
 Spawn.prototype.getCreepBody = function (role) {
