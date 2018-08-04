@@ -1,8 +1,8 @@
 Creep.prototype.loop = function () {
   if (this.spawning) {
     if (this.memory.linkTo) {
-      const {type, objectId} = this.memory.linkTo;
-      const target = getObjectById(objectId);
+      const {type, targetId} = this.memory.linkTo;
+      const target = getObjectById(targetId);
 
       let linkType;
 
