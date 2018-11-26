@@ -1,3 +1,6 @@
+/**
+ * Owner
+ */
 global.USERNAME = _.get(_.first(_.toArray(Game.structures)), 'owner.username');
 
 /**
@@ -28,64 +31,21 @@ global.TERRAIN_SWAMP = 'swamp';
 global.TERRAIN_WALL = 'wall';
 
 /**
- * Object link constants.
- */
-const linkTypes = keyMirror({
-  LINK_HARVESTER: null,
-  LINK_HAULER: null,
-  LINK_UPGRADER: null,
-  LINK_STORAGE: null,
-  LINK_ENERGY_SOURCE: null,
-  LINK_CONSTRUCTION: null,
-  LINK_CONSTRUCTION_OBSERVER: null,
-});
-
-_.forEach(Object.keys(linkTypes), (key) => {
-  global[key] = key;
-});
-
-/**
- * Role constants.
- */
-const roles = keyMirror({
-  ROLE_HARVESTER: null,
-  ROLE_HAULER: null,
-  ROLE_UPGRADER: null,
-  ROLE_BUILDER: null,
-});
-
-_.forEach(Object.keys(roles), (key) => {
-  global[key] = key;
-});
-
-/**
- * Request constants.
- */
-const requestTypes = keyMirror({
-  REQUEST_HARVESTER: null,
-  REQUEST_HAULER: null,
-  REQUEST_UPGRADER: null,
-  REQUEST_BUILDER: null,
-  REQUEST_LOW_ENERGY: null,
-  REQUEST_LOW_HEALTH: null,
-  REQUEST_DEFEND: null,
-});
-
-_.forEach(Object.keys(requestTypes), (key) => {
-  global[key] = key;
-});
-
-/**
  * Flag constants
  */
 const flagTypes = keyMirror({
   FLAG_PLACEHOLDER: null,
+
+  // Structures
   FLAG_CONTAINER: null,
   FLAG_EXTENSION: null,
   FLAG_STORAGE: null,
   FLAG_TOWER: null,
   FLAG_RAMPART: null,
   FLAG_WALL: null,
+
+  // Actions
+  FLAG_HARVEST: null,
   FLAG_CLAIM: null,
   FLAG_REMOTE_HARVEST: null,
 });
@@ -95,16 +55,11 @@ _.forEach(Object.keys(flagTypes), (key) => {
 });
 
  global.FLAG = {
-   // Defense
    [COLOR_RED]: {
-     [COLOR_WHITE]: FLAG_TOWER,
-     [COLOR_CYAN]: FLAG_RAMPART,
-     [COLOR_GREY]: FLAG_WALL,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
-   // Expedition
    [COLOR_PURPLE]: {
-     [COLOR_WHITE]: FLAG_CLAIM,
-     [COLOR_YELLOW]: FLAG_REMOTE_HARVEST,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_BLUE]: {
      [COLOR_WHITE]: FLAG_PLACEHOLDER,
@@ -115,11 +70,8 @@ _.forEach(Object.keys(flagTypes), (key) => {
    [COLOR_GREEN]: {
      [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
-   // Storage
    [COLOR_YELLOW]: {
-     [COLOR_WHITE]: FLAG_CONTAINER,
-     [COLOR_BLUE]: FLAG_EXTENSION,
-     [COLOR_ORANGE]: FLAG_STORAGE,
+     [COLOR_WHITE]: FLAG_HARVESTER,
    },
    [COLOR_ORANGE]: {
      [COLOR_WHITE]: FLAG_PLACEHOLDER,
