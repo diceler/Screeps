@@ -29,10 +29,11 @@ Object.defineProperty(Source.prototype, 'slots', {
   get: function () {
     if (!this._slots) {
       if (!this.memory.slots) {
+        const terrain = Game.map.getRoomTerrain(this.room.name);
         let slots = 0;
         _.forEach([this.pos.x - 1, this.pos.x, this.pos.x + 1], x => {
           _.forEach([this.pos.y - 1, this.pos.y, this.pos.y + 1], y => {
-            if (Game.map.getTerrainAt(x, y, this.pos.roomName) !== TERRAIN_WALL) {
+            if (terrain.get(x, y) !== TERRAIN_MASK_WALL) {
               slots++;
             }
           }, this);

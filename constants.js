@@ -24,13 +24,6 @@ global.ENERGY_CAPACITY_AVAILABLE = {
 };
 
 /**
- * Terrain constants.
- */
-global.TERRAIN_PLAIN = 'plain';
-global.TERRAIN_SWAMP = 'swamp';
-global.TERRAIN_WALL = 'wall';
-
-/**
  * Flag constants
  */
 const flagTypes = keyMirror({
