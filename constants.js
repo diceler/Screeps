@@ -71,7 +71,7 @@ _.forEach(Object.keys(flagTypes), (key) => {
      [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_YELLOW]: {
-     [COLOR_WHITE]: FLAG_HARVESTER,
+     [COLOR_WHITE]: FLAG_PLACEHOLDER,
    },
    [COLOR_ORANGE]: {
      [COLOR_WHITE]: FLAG_PLACEHOLDER,
