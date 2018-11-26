@@ -1,7 +1,6 @@
 require('main.imports');
 
 module.exports.loop = () => {
-  Memory.requests = Memory.requests || [];
   clearMemory();
   executeLoops();
 };
@@ -43,15 +42,15 @@ function executeLoops() {
   // for (const flag in Game.flags) {
   //   Game.flags[flag].loop();
   // }
-  for (const creep in Game.creeps) {
-    Game.creeps[creep].loop();
-  }
-  // for (const room in Game.rooms) {
-  //   Game.rooms[room].loop();
+  // for (const creep in Game.creeps) {
+  //   Game.creeps[creep].loop();
   // }
-  for (const structure in Game.structures) {
-    Game.structures[structure].loop();
+  for (const room in Game.rooms) {
+    Game.rooms[room].loop();
   }
+  // for (const structure in Game.structures) {
+  //   Game.structures[structure].loop();
+  // }
   // for (const constructionSite in Memory.constructionSitea) {
   //   Game.rooms[constructionSite].loop();
   // }
