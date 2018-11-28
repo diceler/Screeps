@@ -14,3 +14,13 @@ global.getObjectById = function (id) {
   // Return undefined if it's not a Flag either.
   return !_.isUndefined(object) ? object : undefined;
 };
+
+global.__mapToGlobal = function (array) {
+  if (_.isArray(array)) {
+    _.forEach(array, (key) => {
+      global[key] = key;
+    });
+  }
+
+  throw new Error('__mapToGlobal: argument is not an Array');
+};

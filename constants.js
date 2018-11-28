@@ -24,58 +24,8 @@ global.ENERGY_CAPACITY_AVAILABLE = {
 };
 
 /**
- * Flag constants
+ * Link constants
  */
-const flagTypes = keyMirror({
-  FLAG_PLACEHOLDER: null,
-
-  // Structures
-  FLAG_CONTAINER: null,
-  FLAG_EXTENSION: null,
-  FLAG_STORAGE: null,
-  FLAG_TOWER: null,
-  FLAG_RAMPART: null,
-  FLAG_WALL: null,
-
-  // Actions
-  FLAG_HARVEST: null,
-  FLAG_CLAIM: null,
-  FLAG_REMOTE_HARVEST: null,
-});
-
-_.forEach(Object.keys(flagTypes), (key) => {
-  global[key] = key;
-});
-
- global.FLAG = {
-   [COLOR_RED]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_PURPLE]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_BLUE]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_CYAN]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_GREEN]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_YELLOW]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_ORANGE]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_BROWN]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_GREY]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   },
-   [COLOR_WHITE]: {
-     [COLOR_WHITE]: FLAG_PLACEHOLDER,
-   }
- };
+__mapToGlobal([
+  "LINK_ENERGY_SOURCE",
+]);
