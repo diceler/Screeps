@@ -5,12 +5,12 @@ Room.prototype.loop = function () {
     const source = getObjectById(sourceId);
 
     if (!source.occupied) {
-      this.createSpawnRequest(ROLE_HARVESTER, {sourceId}, sourceId);
+      this.createSpawnRequest(sourceId, ROLE_HARVESTER, {sourceId});
     }
   });
 };
 
-Room.prototype.createSpawnRequest = function (role, memory, requesterId) {
+Room.prototype.createSpawnRequest = function (requesterId, role, memory) {
   if (!role || !_.isObject(memory)) {
     console.log('ERR', `Can't create spawn request for ${role} in ${this.name}`);
     return ERR_INVALID_ARGS;
