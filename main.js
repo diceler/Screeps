@@ -1,7 +1,16 @@
+'use strict';
+
 require('main.imports');
 
 module.exports.loop = () => {
-  Memory.requests = Memory.requests || [];
+  if (!Memory.USERNAME) {
+    Memory.USERNAME = _.get(_.first(_.toArray(Game.structures)), 'owner.username');
+  }
+
+  if (!Memory.MAINBASE) {
+    Memory.MAINBASE = _.get(_.first(_.toArray(Game.structures)), 'room.name');
+  }
+
   clearMemory();
   executeLoops();
 };

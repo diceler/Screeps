@@ -1,3 +1,5 @@
+'use strict';
+
 Object.defineProperty(Source.prototype, 'memory', {
   configurable: true,
   get: function () {
@@ -46,5 +48,20 @@ Object.defineProperty(Source.prototype, 'slots', {
     }
 
     return this._slots;
+  }
+});
+
+Object.defineProperty(Source.prototype, 'occupied', {
+  configurable: true,
+  get: function () {
+    if (!this._occupied) {
+      const linkedCreeps = _.filter(Game.creeps, creep => _.some(creep.links, {id: this.id}));
+      const totalWorkParts = _.sum(linkedCreeps, creep => _.size(_.filter(creep.body, 'type', WORK)));
+      const harvestPower = totalWorkParts * HARVEST_POWER;
+
+      this._occupied = (_.size(linkedCreeps) >= this.slots || harvestPower >= MAX_HARVEST_POWER);
+    }
+
+    return this._occupied;
   }
 });

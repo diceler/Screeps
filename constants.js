@@ -1,7 +1,4 @@
-/**
- * Owner
- */
-global.USERNAME = _.get(_.first(_.toArray(Game.structures)), 'owner.username');
+'use strict';
 
 /**
  * Settings.
@@ -29,3 +26,23 @@ global.ENERGY_CAPACITY_AVAILABLE = {
 __mapToGlobal([
   "LINK_ENERGY_SOURCE",
 ]);
+
+/**
+ * Roles
+ */
+__mapToGlobal([
+  "ROLE_HARVESTER",
+  "ROLE_HAULER",
+  "ROLE_BUILDER",
+  "ROLE_UPGRADER",
+]);
+
+/**
+ * Spawn priority
+ */
+global.SPAWN_PRIORITY = {
+  [ROLE_HARVESTER]: 50,
+  [ROLE_HAULER]: 60,
+  [ROLE_BUILDER]: 70,
+  [ROLE_UPGRADER]: 100,
+};

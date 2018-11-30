@@ -1,3 +1,5 @@
+'use strict';
+
 global.keyMirror = function(obj) {
   let ret = {};
   let key;

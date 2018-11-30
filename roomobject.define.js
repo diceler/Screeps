@@ -1,3 +1,5 @@
+'use strict';
+
 Object.defineProperty(RoomObject.prototype, 'links', {
   configurable: true,
   get: function () {

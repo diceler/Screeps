@@ -1,6 +1,10 @@
+'use strict';
+
+global.roomNameRegex = /^[WE]([0-9]+)[NS]([0-9]+)$/;
+
 global.getObjectById = function (id) {
   if (_.isUndefined(id)) {
-    console.log('global.getObjectById: id was undefined.');
+    console.log('getObjectById: "id" was undefined.');
     return undefined;
   }
 
@@ -15,12 +19,17 @@ global.getObjectById = function (id) {
   return !_.isUndefined(object) ? object : undefined;
 };
 
+/**
+ * Constants use only.
+ * @param array
+ * @private
+ */
 global.__mapToGlobal = function (array) {
   if (_.isArray(array)) {
     _.forEach(array, (key) => {
       global[key] = key;
     });
+  } else {
+    throw new Error('__mapToGlobal: argument is not an Array');
   }
-
-  throw new Error('__mapToGlobal: argument is not an Array');
 };

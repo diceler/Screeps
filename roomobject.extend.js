@@ -1,3 +1,5 @@
+'use strict';
+
 RoomObject.prototype.linkTo = function (target, type, data) {
   if (!target || !_.isObject(target)) {
     return ERR_INVALID_TARGET;
