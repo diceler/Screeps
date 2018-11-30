@@ -1,6 +1,7 @@
 'use strict';
 
 Room.prototype.loop = function () {
+  // Check if sources need harvesters.
   _.forEach(this.sources, sourceId => {
     const source = getObjectById(sourceId);
 
@@ -24,6 +25,7 @@ Room.prototype.createSpawnRequest = function (requesterId, role, memory) {
       role,
       memory: _.assign({}, memory, {base: this.name}),
       priority: SPAWN_PRIORITY[role],
+      created: Game.time,
     });
 
     return OK;
