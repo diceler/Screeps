@@ -15,7 +15,7 @@ Room.prototype.loop = function () {
   });
 };
 
-Room.prototype.createSpawnRequest = function (requesterId, role, memory) {
+Room.prototype.createSpawnRequest = function (requesterId, role, memory = {}) {
   if (!requesterId || !role || !_.isObject(memory)) {
     console.log('ERR', `Can't create spawn request for ${role} in ${this.name}`);
     return ERR_INVALID_ARGS;
