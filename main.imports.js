@@ -20,3 +20,5 @@ require('spawn.extend');
 // require('flag.extend');
 // require('constructionsite.define');
 // require('constructionsite.extend');
+require('role._base');
+require('role.harvester');

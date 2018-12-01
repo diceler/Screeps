@@ -22,7 +22,7 @@ global.SPAWN_PRIORITY = {
 /**
  * Creep body types
  */
-const DEFAULT_CREEP_BODY = [WORK, CARRY, MOVE];
+global.DEFAULT_CREEP_BODY = [WORK, CARRY, MOVE];
 global.CREEP_BODY = {
   [ROLE_HARVESTER]: rcl => {
     switch (rcl) {

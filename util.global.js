@@ -2,6 +2,10 @@
 
 global.roomNameRegex = /^[WE]([0-9]+)[NS]([0-9]+)$/;
 
+/**
+ * Override of Game.getObjectById to also be able to get Flag objects.
+ * @param id
+ */
 global.getObjectById = function (id) {
   if (_.isUndefined(id)) {
     console.log('getObjectById: "id" was undefined.');
@@ -20,16 +24,23 @@ global.getObjectById = function (id) {
 };
 
 /**
- * Constants use only.
- * @param array
+ * Creates an array of specified body parts.
+ * @param bodyPart
+ * @param quantity
  * @private
  */
-global.__mapToGlobal = function (array) {
-  if (_.isArray(array)) {
-    _.forEach(array, (key) => {
-      global[key] = key;
-    });
-  } else {
-    throw new Error('__mapToGlobal: argument is not an Array');
+global.parts = function (bodyPart, quantity) {
+  if (isNaN(quantity)) {
+    throw new Error('parts: "quantity" is not a number.');
   }
+
+  let bodyParts = [];
+
+  if (quantity) {
+    for (let i = 0; bodyParts.length < quantity; i++) {
+      bodyParts.push(bodyPart);
+    }
+  }
+
+  return bodyParts;
 };
