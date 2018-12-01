@@ -1,7 +1,7 @@
 Object.defineProperty(StructureController.prototype, 'ticksSinceUpgrade', {
   configurable: true,
   get: function () {
-    return Game.time - this.memory.lastUpgradeTime;
+    return Game.time - (this.memory.lastUpgradeTime || CONTROLLER_LAST_UPGRADED_LIMIT);
   }
 });
 

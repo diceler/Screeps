@@ -23,3 +23,4 @@ require('controller.define');
 require('role.harvester');
 require('role.hauler');
 require('role.upgrader');
+require('role.defender');

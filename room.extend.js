@@ -1,6 +1,10 @@
 'use strict';
 
 Room.prototype.loop = function () {
+  if (this.isBeingAttacked && this.controller.level < 3) {
+    this.createSpawnRequest(this.name, ROLE_DEFENDER);
+  }
+
   // Check if sources need harvesters.
   _.forEach(this.sources, sourceId => {
     const source = getObjectById(sourceId);

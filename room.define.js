@@ -14,3 +14,18 @@ Object.defineProperty(Room.prototype, 'sources', {
     return this._sources;
   }
 });
+
+Object.defineProperty(Room.prototype, 'isBeingAttacked', {
+  configurable: true,
+  get: function () {
+    if (!this._isBeingAttacked) {
+      if (!this.memory.isBeingAttacked) {
+        this.memory.isBeingAttacked = this.find(FIND_HOSTILE_CREEPS).length > 0;
+      }
+
+      this._isBeingAttacked= this.memory.isBeingAttacked;
+    }
+
+    return this._isBeingAttacked;
+  }
+});

@@ -26,3 +26,4 @@ global.ROLE_HARVESTER = 'harvester';
 global.ROLE_HAULER = 'hauler';
 global.ROLE_BUILDER = 'builder';
 global.ROLE_UPGRADER = 'upgrader';
+global.ROLE_DEFENDER = 'defender';
