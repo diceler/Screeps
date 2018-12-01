@@ -2,13 +2,18 @@
 
 Room.prototype.loop = function () {
   // Check if sources need harvesters.
-  _.forEach(this.sources, sourceId => {
-    const source = getObjectById(sourceId);
+  const sources = this.sources.map(sourceId => getObjectById(sourceId)).filter(source => !source.occupied);
 
-    if (!source.occupied) {
-      this.createSpawnRequest(sourceId, ROLE_HARVESTER, {sourceId});
+  if (_.size(sources)) {
+    _.forEach(sources, source => {
+      this.createSpawnRequest(source.id, ROLE_HARVESTER, {sourceId: source.id});
+    });
+  } else {
+    // If all sources are occupied, check if the Controller needs upgraders.
+    if (this.controller.ticksSinceUpgrade >= CONTROLLER_LAST_UPGRADED_LIMIT || !this.controller.sufficientUpgraders) {
+      this.createSpawnRequest(this.controller.id, ROLE_UPGRADER);
     }
-  });
+  }
 };
 
 Room.prototype.createSpawnRequest = function (requesterId, role, memory = {}) {

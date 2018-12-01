@@ -18,3 +18,25 @@ Object.defineProperty(StructureController.prototype, 'signedByMe', {
     return (this.sign && this.sign.username === Memory.USERNAME);
   }
 });
+
+Object.defineProperty(StructureController.prototype, 'sufficientUpgraders', {
+  configurable: true,
+  get: function () {
+    const upgraders = _.size(_.filter(Game.creeps, {room: {name: this.room.name}, memory: {role: ROLE_UPGRADER}}));
+
+    switch (this.controller.level) {
+      case 1:
+      case 8:
+        return upgraders >= 1;
+      case 2:
+      case 3:
+      case 4:
+        return upgraders >= 2;
+      case 5:
+      case 6:
+        return upgraders >= 4;
+      default:
+        return false;
+    }
+  }
+});
