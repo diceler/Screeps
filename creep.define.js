@@ -23,9 +23,12 @@ Object.defineProperty(Creep.prototype, 'role', {
   configurable: true,
   get: function () {
     if (!this._role) {
-      this._role = new roles[this.memory.role];
+      this._role = new roles[this.memory.role](this);
     }
 
     return this._role;
+  },
+  set: function (value) {
+    this.memory.role = value;
   }
 });

@@ -26,11 +26,17 @@ Spawn.prototype.spawnCreep = function (role, memory) {
 };
 
 Spawn.prototype.getCreepBody = function (role) {
+  const roleConstruct = roles[role];
+
+  if (!roleConstruct) {
+    return undefined;
+  }
+
   let rcl = this.room.controller.level;
-  let body = CREEP_BODY[role](rcl);
+  let body = roleConstruct.body(rcl);
 
   while (rcl > 0 && !this.canCreateCreep(body)) {
-    body = rcl > 0 ? CREEP_BODY[role](--rcl) : undefined;
+    body = rcl > 0 ? roleConstruct.body(--rcl) : undefined;
   }
 
   return body;
