@@ -8,6 +8,8 @@ global.roles = {};
 global.MAX_STUCK = 3;
 global.MAX_HARVEST_POWER = 10;
 global.SPAWN_REQUEST_EXPIRE = 200;
+global.CONTROLLER_TICKS_TO_DOWNGRADE_MIN = 1000;
+global.CONTROLLER_LAST_UPGRADED_LIMIT = 500;
 
 /**
  * Spawn priority

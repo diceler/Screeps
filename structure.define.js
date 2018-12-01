@@ -53,3 +53,18 @@ Object.defineProperty(Structure.prototype, 'isFull', {
     return this._isFull;
   }
 });
+
+Object.defineProperty(Structure.prototype, 'isEmpty', {
+  configurable: true,
+  get: function () {
+    if (!this._isEmpty) {
+      if (!this.store) {
+        this._isEmpty = this.energy === 0;
+      } else {
+        this._isEmpty = _.sum(this.store) === 0;
+      }
+    }
+
+    return this._isEmpty;
+  }
+});
