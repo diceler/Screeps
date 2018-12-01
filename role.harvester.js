@@ -14,6 +14,15 @@ class Harvester extends CreepBase {
         return DEFAULT_CREEP_BODY;
     }
   }
+
+  tick() {
+    const creep = this.creep;
+    let source = Game.getObjectById(creep.memory.sourceId);
+
+    if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(source);
+    }
+  }
 }
 
 roles[ROLE_HARVESTER] = Harvester;
