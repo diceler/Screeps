@@ -19,7 +19,7 @@ Room.prototype.createSpawnRequest = function (requesterId, role, memory) {
 
   this.memory.spawnQueue = this.memory.spawnQueue || [];
 
-  if (!_.find(this.memory.spawnQueue, {requesterId})) {
+  if (!_.some(this.memory.spawnQueue, {requesterId})) {
     this.memory.spawnQueue.push({
       requesterId,
       role,

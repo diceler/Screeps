@@ -1,6 +1,6 @@
 require('util.global');
-require('util.keyMirror');
-require('constants');
+require('_constants');
+require('_config');
 require('roomobject.define');
 require('roomobject.extend');
 // require('creep.define');
