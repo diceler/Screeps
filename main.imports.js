@@ -11,7 +11,7 @@ require('room.extend');
 // require('roomposition.extend');
 require('source.define');
 // require('source.extend');
-// require('structure.define');
+require('structure.define');
 require('structure.extend');
 require('spawn.extend');
 // require('controller.extend');
