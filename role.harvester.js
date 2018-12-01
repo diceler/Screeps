@@ -24,7 +24,7 @@ class Harvester extends Worker {
       this._hasPickup = this.creep.memory.hasPickup;
     }
 
-    return this._hasPickup();
+    return this._hasPickup;
   }
 
   harvest() {
