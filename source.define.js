@@ -59,7 +59,7 @@ Object.defineProperty(Source.prototype, 'occupied', {
       // const totalWorkParts = _.sum(linkedCreeps, creep => _.size(_.filter(creep.body, 'type', WORK)));
       // const harvestPower = totalWorkParts * HARVEST_POWER;
       // this._occupied = (_.size(linkedCreeps) >= this.slots || harvestPower >= MAX_HARVEST_POWER);
-      this._occupied = _.some(Game.creeps, {room: {name: this.room.name}, memory: {sourceId: this.id}});
+      this._occupied = _.some(Game.creeps, {room: {name: this.room.name}, memory: {role: ROLE_HARVESTER, sourceId: this.id}});
     }
 
     return this._occupied;
