@@ -21,8 +21,6 @@ class Harvester extends CreepBase {
 
     if (storage) {
       this.creep.memory.storageId = storage.id;
-    } else {
-      console.log('ERR: All storages are full');
     }
 
     return storage;
