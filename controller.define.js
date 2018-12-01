@@ -27,14 +27,13 @@ Object.defineProperty(StructureController.prototype, 'sufficientUpgraders', {
     switch (this.level) {
       case 1:
       case 2:
-        return upgraders >= 2;
       case 3:
       case 4:
-        return upgraders >= 3;
+        return upgraders >= 2;
       case 5:
       case 6:
       case 7:
-        return upgraders >= 4;
+        return upgraders >= 3;
       case 8:
         return upgraders >= 1;
       default:
