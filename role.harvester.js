@@ -1,12 +1,13 @@
 'use strict';
+const CreepBase = require('role._base');
 
-module.exports = class Harvester extends CreepBase {
+class Harvester extends CreepBase {
   constructor(creep) {
     super(creep);
     this.base = creep.memory.base;
   }
 
-  static body = function (rcl) {
+  static body (rcl) {
     switch (rcl) {
       case 2:
         return _.flatten([parts(WORK, 5), parts(MOVE, 2)]);
@@ -14,4 +15,6 @@ module.exports = class Harvester extends CreepBase {
         return DEFAULT_CREEP_BODY;
     }
   }
-};
+}
+
+roles[ROLE_HARVESTER] = Harvester;

@@ -1,14 +1,16 @@
 'use strict';
 
-module.exports = class CreepBase {
+class CreepBase {
   constructor(creep) {
     this.creep = creep;
   }
 
-  static findConstruct = function (role) {
+  static findConstruct(role) {
     switch (role) {
       case ROLE_HARVESTER:
-        return Harvester;
+        return roles[ROLE_HARVESTER];
     }
   }
-};
+}
+
+module.exports = CreepBase;
