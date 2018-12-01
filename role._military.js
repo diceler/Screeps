@@ -1,7 +1,7 @@
 'use strict';
 const CreepBase = require('role._base');
 
-class Soldier extends CreepBase {
+class Military extends CreepBase {
   constructor(creep) {
     super(creep);
   }
@@ -18,4 +18,4 @@ class Soldier extends CreepBase {
   }
 }
 
-module.exports = Soldier;
+module.exports = Military;

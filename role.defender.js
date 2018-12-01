@@ -1,7 +1,7 @@
 'use strict';
-const Soldier = require('role._soldier');
+const Military = require('role._military');
 
-class Defender extends Soldier {
+class Defender extends Military {
   constructor(creep) {
     super(creep);
   }
