@@ -23,7 +23,7 @@ Room.prototype.createSpawnRequest = function (requesterId, role, memory) {
     this.memory.spawnQueue.push({
       requesterId,
       role,
-      memory: _.assign({}, memory, {base: this.name}),
+      memory: _.assign({}, memory, {base: this.name, role}),
       priority: SPAWN_PRIORITY[role],
       created: Game.time,
     });
