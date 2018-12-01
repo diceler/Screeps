@@ -8,11 +8,11 @@ Room.prototype.loop = function () {
     _.forEach(sources, source => {
       this.createSpawnRequest(source.id, ROLE_HARVESTER, {sourceId: source.id});
     });
-  } else {
-    // If all sources are occupied, check if the Controller needs upgraders.
-    if (this.controller.ticksSinceUpgrade >= CONTROLLER_LAST_UPGRADED_LIMIT || !this.controller.sufficientUpgraders) {
-      this.createSpawnRequest(this.controller.id, ROLE_UPGRADER);
-    }
+  }
+
+  // Check if the Controller needs upgraders.
+  if (this.controller.ticksSinceUpgrade >= CONTROLLER_LAST_UPGRADED_LIMIT || !this.controller.sufficientUpgraders) {
+    this.createSpawnRequest(this.controller.id, ROLE_UPGRADER);
   }
 };
 

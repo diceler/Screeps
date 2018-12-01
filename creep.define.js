@@ -1,3 +1,5 @@
+'use strict';
+
 Object.defineProperty(Creep.prototype, 'isFull', {
   configurable: true,
   get: function () {

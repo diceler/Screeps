@@ -1,3 +1,5 @@
+'use strict';
+
 require('util.global');
 require('_constants');
 require('_config');

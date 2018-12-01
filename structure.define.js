@@ -1,3 +1,5 @@
+'use strict';
+
 Object.defineProperty(Structure.prototype, 'memory', {
   configurable: true,
   get: function () {

@@ -1,3 +1,5 @@
+'use strict';
+
 Object.defineProperty(StructureController.prototype, 'ticksSinceUpgrade', {
   configurable: true,
   get: function () {

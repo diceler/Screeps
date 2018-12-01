@@ -1,3 +1,5 @@
+'use strict';
+
 Spawn.prototype.tick = function () {
   if (this.spawning || this.room.energyAvailable < 200) {
     return;
