@@ -19,6 +19,7 @@ class Hauler extends Worker {
     const harvester = getObjectById(this.creep.memory.harvesterId);
 
     if (!harvester) {
+      // TODO: Recycle instead down the line.
       this.creep.suicide();
       return;
     }

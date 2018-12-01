@@ -9,7 +9,7 @@ class Harvester extends Worker {
   static body(rcl) {
     switch (rcl) {
       case 3:
-        return _.flatten([parts(WORK, 5), parts(MOVE, 2)]);
+        return _.flatten([parts(WORK, 5), parts(MOVE, 1)]);
       default:
         return DEFAULT_CREEP_BODY;
     }
