@@ -1,7 +1,7 @@
 'use strict';
-const CreepBase = require('role._base');
+const Worker = require('role._worker');
 
-class Harvester extends CreepBase {
+class Harvester extends Worker {
   constructor(creep) {
     super(creep);
   }
@@ -12,40 +12,6 @@ class Harvester extends CreepBase {
         return _.flatten([parts(WORK, 5), parts(MOVE, 2)]);
       default:
         return DEFAULT_CREEP_BODY;
-    }
-  }
-
-  findStorage() {
-    const storages = this.creep.room.find(FIND_MY_STRUCTURES, {filter: structure => structure.storesEnergy && !structure.isFull});
-    const storage = _.first(storages);
-
-    if (storage) {
-      this.creep.memory.storageId = storage.id;
-    }
-
-    return storage;
-  }
-
-  deliver() {
-    let storage;
-
-    if (!this.creep.memory.storageId) {
-      storage = this.findStorage();
-    } else {
-      storage = getObjectById(this.creep.memory.storageId);
-    }
-
-    if (storage) {
-      let actionResult = this.creep.transfer(storage, RESOURCE_ENERGY);
-
-      switch (actionResult) {
-        case ERR_NOT_IN_RANGE:
-          this.creep.moveTo(storage);
-          break;
-        case ERR_FULL:
-          delete this.creep.memory.storageId;
-          break;
-      }
     }
   }
 
