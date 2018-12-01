@@ -5,17 +5,16 @@ Spawn.prototype.tick = function () {
 
   if (_.size(this.room.memory.spawnQueue)) {
     const request = this.room.memory.spawnQueue.sort((a, b) => a - b).shift();
-    const {role, memory} = request;
 
     // If the creep couldn't be created due to lack of resources, add it to the queue again.
-    if (this.spawnCreep(role, memory) === ERR_NOT_ENOUGH_RESOURCES) {
+    if (this.spawnCreep(request) === ERR_NOT_ENOUGH_RESOURCES) {
       this.room.memory.spawnQueue.push(request);
     }
   }
 };
 
 Spawn.prototype.__spawnCreep = Spawn.prototype.spawnCreep;
-Spawn.prototype.spawnCreep = function (role, memory) {
+Spawn.prototype.spawnCreep = function ({role, memory}) {
   const body = this.getCreepBody(role);
 
   if (!body) {
