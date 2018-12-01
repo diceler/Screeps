@@ -28,38 +28,42 @@ class Harvester extends CreepBase {
     return storage;
   }
 
-  tick() {
-    const creep = this.creep;
+  deliver() {
+    let storage;
 
-    if (!creep.isFull) {
-      let source = Game.getObjectById(creep.memory.sourceId);
-
-      if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(source);
-      }
+    if (!this.creep.memory.storageId) {
+      storage = this.findStorage();
     } else {
-      let storage;
+      storage = getObjectById(this.creep.memory.storageId);
+    }
 
-      if (!creep.memory.storageId) {
-        storage = this.findStorage();
-
-        if (!storage) {
-          return;
-        }
-      } else {
-        storage = getObjectById(creep.memory.storageId);
-      }
-
-      let actionResult = creep.transfer(storage, RESOURCE_ENERGY);
+    if (storage) {
+      let actionResult = this.creep.transfer(storage, RESOURCE_ENERGY);
 
       switch (actionResult) {
         case ERR_NOT_IN_RANGE:
-          creep.moveTo(storage);
+          this.creep.moveTo(storage);
           break;
         case ERR_FULL:
-          delete creep.memory.storageId;
+          delete this.creep.memory.storageId;
           break;
       }
+    }
+  }
+
+  harvest() {
+    let source = Game.getObjectById(this.creep.memory.sourceId);
+
+    if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
+      this.creep.moveTo(source);
+    }
+  }
+
+  tick() {
+    if (!this.creep.isFull) {
+      this.harvest();
+    } else {
+      this.deliver();
     }
   }
 }
