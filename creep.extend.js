@@ -9,8 +9,13 @@ Creep.prototype.loop = function () {
 Creep.prototype.__upgradeController = Creep.prototype.upgradeController;
 Creep.prototype.upgradeController = function (target) {
   if (target instanceof StructureController) {
-    target.updateUpgradeTime();
-    return this.__upgradeController(target);
+    const actionResult = this.__upgradeController(target);
+
+    if (actionResult === OK) {
+      target.updateUpgradeTime();
+    }
+
+    return actionResult;
   }
 
   return ERR_INVALID_TARGET;
