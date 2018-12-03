@@ -12,6 +12,8 @@ class Military extends CreepBase {
 
     if (hostile) {
       this.creep.memory.hostileId = hostile.id;
+    } else {
+      this.memory.isBeingAttacked = false;
     }
 
     return hostile;
