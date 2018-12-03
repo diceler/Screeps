@@ -61,7 +61,7 @@ function executeLoops() {
   for (const structure in Game.structures) {
     Game.structures[structure].loop();
   }
-  // for (const constructionSite in Memory.constructionSitea) {
-  //   Game.rooms[constructionSite].loop();
-  // }
+  for (const constructionSite in Memory.constructionSitea) {
+    Game.constructionSites[constructionSite].loop();
+  }
 }

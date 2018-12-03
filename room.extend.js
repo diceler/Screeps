@@ -1,18 +1,13 @@
 'use strict';
 
 Room.prototype.loop = function () {
-  // Check if sources need harvesters.
-  const sources = this.sources.map(sourceId => getObjectById(sourceId)).filter(source => !source.occupied);
+  // Check if unoccupiedSources need harvesters.
+  const unoccupiedSources = _.filter(this.sources, {occupied: false});
 
-  if (_.size(sources)) {
-    _.forEach(sources, source => {
+  if (_.size(unoccupiedSources)) {
+    _.forEach(unoccupiedSources, source => {
       this.createSpawnRequest(source.id, ROLE_HARVESTER, {sourceId: source.id});
     });
-  }
-
-  // Check if the Controller needs upgraders.
-  if (this.controller.ticksSinceUpgrade >= CONTROLLER_LAST_UPGRADED_LIMIT || !this.controller.sufficientUpgraders) {
-    this.createSpawnRequest(this.controller.id, ROLE_UPGRADER);
   }
 };
 
