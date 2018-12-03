@@ -6,7 +6,7 @@ Spawn.prototype.tick = function () {
   }
 
   if (_.size(this.room.memory.spawnQueue)) {
-    const request = this.room.memory.spawnQueue.sort((a, b) => a - b).shift();
+    const request = this.room.memory.spawnQueue.sort((a, b) => a.priority - b.priority).shift();
 
     // If the creep couldn't be created due to lack of resources, add it to the queue again.
     if (this.spawnCreep(request) === ERR_NOT_ENOUGH_RESOURCES) {
