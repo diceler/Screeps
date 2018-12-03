@@ -30,7 +30,11 @@ Object.defineProperty(Structure.prototype, 'storesEnergy', {
   configurable: true,
   get: function () {
     if (!this._storesEnergy) {
-      this._storesEnergy = (this.hasOwnProperty('store') || this.hasOwnProperty('energy'));
+      if (!this.storeCapacity) {
+        this._storesEnergy = !!this.energyCapacity;
+      } else {
+        this._storesEnergy = true;
+      }
     }
 
     return this._storesEnergy;
@@ -41,7 +45,7 @@ Object.defineProperty(Structure.prototype, 'isFull', {
   configurable: true,
   get: function () {
     if (!this._isFull) {
-      if (!this.hasOwnProperty('store')) {
+      if (!this.storeCapacity) {
         this._isFull = this.energy === this.energyCapacity;
       } else {
         this._isFull = _.sum(this.store) === this.storeCapacity;
@@ -56,7 +60,7 @@ Object.defineProperty(Structure.prototype, 'isEmpty', {
   configurable: true,
   get: function () {
     if (!this._isEmpty) {
-      if (!this.hasOwnProperty('store')) {
+      if (!this.storeCapacity) {
         this._isEmpty = this.energy === 0;
       } else {
         this._isEmpty = _.sum(this.store) === 0;
