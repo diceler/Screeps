@@ -36,7 +36,9 @@ class Upgrader extends Worker {
         }
       }
     } else {
-      this.recharge()
+      if (_.every(this.creep.room.sources, 'occupied')) {
+        this.recharge();
+      }
     }
   }
 }
