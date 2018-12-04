@@ -11,12 +11,12 @@ Room.prototype.loop = function () {
   }
 
   if (!this.controller.hasSufficientUpgraders) {
-    this.createSpawnRequest(this.id, ROLE_UPGRADER);
+    this.createSpawnRequest(this.name, ROLE_UPGRADER);
   }
 
-  if (this.find(FIND_CONSTRUCTION_SITES)) {
+  if (_.size(this.find(FIND_CONSTRUCTION_SITES))) {
     if (!_.size(this.creeps[ROLE_BUILDER])) {
-      this.createSpawnRequest(this.id, ROLE_BUILDER);
+      this.createSpawnRequest(this.name, ROLE_BUILDER);
     }
   }
 
@@ -31,7 +31,7 @@ Room.prototype.createSpawnRequest = function (requesterId, role, memory = {}) {
 
   this.memory.spawnQueue = this.memory.spawnQueue || [];
 
-  if (!_.some(this.memory.spawnQueue, {requesterId})) {
+  if (!_.some(this.memory.spawnQueue, {requesterId, role})) {
     this.memory.spawnQueue.push({
       requesterId,
       role,
