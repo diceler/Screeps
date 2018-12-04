@@ -45,7 +45,7 @@ Object.defineProperty(Room.prototype, 'creeps', {
   configurable: true,
   get: function () {
     if (!this._creeps) {
-      this._creeps = _.groupBy(this.find(FIND_MY_CREEPS), 'memory.role');
+      this._creeps = _.groupBy(_.filter(Game.creeps, 'memory.base', this.name), 'memory.role');
     }
 
     return this._creeps;
