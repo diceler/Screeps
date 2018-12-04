@@ -11,7 +11,7 @@ class Harvester extends Worker {
       case 3:
         return _.flatten([parts(WORK, 5), parts(MOVE, 1)]);
       default:
-        return [parts(WORK, 2), parts(CARRY, 1), parts(MOVE, 1)];
+        return _.flatten([parts(WORK, 2), parts(CARRY, 1), parts(MOVE, 1)]);
     }
   }
 
