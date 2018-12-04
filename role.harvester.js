@@ -15,17 +15,17 @@ class Harvester extends Worker {
     }
   }
 
-  get hasPickup() {
-    if (!this._hasPickup) {
-      if (!this.creep.memory.hasPickup) {
-        this.creep.memory.hasPickup = _.some(Game.creeps, {memory: {harvesterId: this.creep.id}});
-      }
-
-      this._hasPickup = this.creep.memory.hasPickup;
-    }
-
-    return this._hasPickup;
-  }
+  // get hasPickup() {
+  //   if (!this._hasPickup) {
+  //     if (!this.creep.memory.hasPickup) {
+  //       this.creep.memory.hasPickup = _.some(Game.creeps, {memory: {harvesterId: this.creep.id}});
+  //     }
+  //
+  //     this._hasPickup = this.creep.memory.hasPickup;
+  //   }
+  //
+  //   return this._hasPickup;
+  // }
 
   harvest() {
     let source = Game.getObjectById(this.creep.memory.sourceId);
@@ -35,47 +35,68 @@ class Harvester extends Worker {
     }
   }
 
-  tick() {
-    if (!this.creep.isFull) {
-      this.harvest();
-    } else {
-      if (this.creep.memory.containerId) {
-        const container = getObjectById(this.creep.memory.containerId);
+  buildContainer() {
+    const constructionSite = getObjectById(this.creep.memory.csId);
 
-        if (container) {
-          if (container instanceof StructureContainer) {
+    if (constructionSite) {
+      if (this.creep.memory.building && this.creep.isEmpty) {
+        this.creep.memory.building = false;
+      }
+
+      if (!this.creep.memory.building && this.creep.isFull) {
+        this.creep.memory.building = true;
+      }
+
+      if (this.creep.memory.building) {
+        this.creep.build(constructionSite);
+      } else {
+        this.harvest();
+      }
+    } else {
+      delete this.creep.memory.csId;
+    }
+  }
+
+  tick() {
+    if (this.creep.memory.csId) {
+      this.buildContainer();
+    } else {
+      if (!this.creep.isFull) {
+        this.harvest();
+      } else {
+        if (this.creep.memory.containerId) {
+          const container = getObjectById(this.creep.memory.containerId);
+
+          if (container) {
             if (this.creep.transfer(container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
               this.creep.moveTo(container);
             }
-          } else if (container instanceof ConstructionSite) {
-            if (this.creep.build(container)) {
-              this.creep.moveTo(container);
-            }
+          } else {
+            delete this.creep.memory.containerId;
           }
         } else {
-          delete this.creep.memory.containerId;
-        }
-      } else {
-        const containersOnMe = _.filter(this.creep.pos.lookFor(LOOK_STRUCTURES), 'type', STRUCTURE_CONTAINER);
+          const containersOnMe = _.filter(this.creep.pos.lookFor(LOOK_STRUCTURES), 'structureType', STRUCTURE_CONTAINER);
 
-        if (_.size(containersOnMe)) {
-          this.creep.memory.containerId = _.first(containersOnMe).id;
-        } else {
-          const constructionSitesOnMe = _.filter(this.creep.pos.lookFor(LOOK_CONSTRUCTION_SITES), 'type', STRUCTURE_CONTAINER);
-
-          if (_.size(constructionSitesOnMe)) {
-            this.creep.memory.containerId = _.first(constructionSitesOnMe).id;
+          if (_.size(containersOnMe)) {
+            this.creep.memory.containerId = _.first(containersOnMe).id;
           } else {
-            this.creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
+            const constructionSitesOnMe = _.filter(this.creep.pos.lookFor(LOOK_CONSTRUCTION_SITES), 'structureType', STRUCTURE_CONTAINER);
+
+            if (_.size(constructionSitesOnMe)) {
+              this.creep.memory.csId = _.first(constructionSitesOnMe).id;
+            } else {
+              this.creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
+            }
           }
         }
       }
-
-      // if (!this.hasPickup) {
-      //   this.creep.room.createSpawnRequest(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
-      //   this.deliver();
-      // }
     }
+
+
+    // if (!this.hasPickup) {
+    //   this.creep.room.createSpawnRequest(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
+    //   this.deliver();
+    // }
   }
 }
 
