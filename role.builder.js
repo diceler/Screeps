@@ -26,7 +26,7 @@ class Builder extends Worker {
       let constructionSite;
 
       if (!this.creep.memory.csId) {
-        const constructionSites = this.creep.room.find(FIND_CONSTRUCTION_SITES);
+        const constructionSites = _.filter(Game.constructionSites, 'room.name', this.name);
 
         if (_.size(constructionSites)) {
           constructionSite = _.first(constructionSites);

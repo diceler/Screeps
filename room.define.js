@@ -36,3 +36,18 @@ Object.defineProperty(Room.prototype, 'creeps', {
     return this._creeps;
   }
 });
+
+Object.defineProperty(Room.prototype, 'structures', {
+  configurable: true,
+  get: function () {
+    if (!this._structures) {
+      if (Game.time % 100 === 0 || !this.memory.structures) {
+        this.memory.structures = _.map(this.find(FIND_STRUCTURES), 'id');
+      }
+
+      this._structures = this.memory.structures.map(id => Game.getObjectById(id));
+    }
+
+    return this._structures;
+  }
+});

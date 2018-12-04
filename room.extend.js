@@ -14,7 +14,7 @@ Room.prototype.loop = function () {
     this.createSpawnRequest(this.name, ROLE_UPGRADER);
   }
 
-  if (_.size(this.find(FIND_CONSTRUCTION_SITES))) {
+  if (_.size(_.filter(Game.constructionSites, 'room.name', this.name))) {
     if (!_.size(this.creeps[ROLE_BUILDER])) {
       this.createSpawnRequest(this.name, ROLE_BUILDER);
     }

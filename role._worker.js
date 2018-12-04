@@ -7,7 +7,7 @@ class Worker extends CreepBase {
   }
 
   findStorage(predicate) {
-    const storages = this.creep.room.find(FIND_STRUCTURES, {filter: predicate});
+    const storages = _.filter(this.creep.room.structures, predicate);
     const storage = _.first(storages);
 
     if (storage) {
