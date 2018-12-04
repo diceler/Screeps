@@ -18,11 +18,11 @@ Object.defineProperty(StructureController.prototype, 'hasSufficientUpgraders', {
       case 3:
       case 4:
       case 8:
-        return 1 <= upgraders;
+        return 1 >= upgraders;
       case 5:
       case 6:
       case 7:
-        return 2 <= upgraders;
+        return 2 >= upgraders;
       default:
         return false;
     }
