@@ -3,11 +3,7 @@
 Object.defineProperty(Creep.prototype, 'isFull', {
   configurable: true,
   get: function () {
-    const carry = _.sum(this.carry);
-    const workParts = _.size(_.filter(this.body, 'type', WORK));
-    const harvestPower = workParts * HARVEST_POWER;
-
-    return (carry === this.carryCapacity || carry + harvestPower > this.carryCapacity);
+    return _.sum(this.carry) === this.carryCapacity;
   }
 });
 
