@@ -15,21 +15,6 @@ Object.defineProperty(Room.prototype, 'sources', {
   }
 });
 
-Object.defineProperty(Room.prototype, 'containers', {
-  configurable: true,
-  get: function () {
-    if (!this._containers) {
-      if (Game.time % 500 === 0 || !this.memory.containers) {
-        this.memory.containers = _.map(this.find(FIND_STRUCTURES, {filter: ({structureType}) => structureType === STRUCTURE_CONTAINER}), 'id');
-      }
-
-      this._containers = this.memory.containers.map(id => Game.getObjectById(id));
-    }
-
-    return this._containers;
-  }
-});
-
 Object.defineProperty(Room.prototype, 'hostiles', {
   configurable: true,
   get: function () {
