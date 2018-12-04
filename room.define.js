@@ -15,17 +15,24 @@ Object.defineProperty(Room.prototype, 'sources', {
   }
 });
 
-Object.defineProperty(Room.prototype, 'isBeingAttacked', {
+Object.defineProperty(Room.prototype, 'hostiles', {
   configurable: true,
   get: function () {
-    if (!this._isBeingAttacked) {
-      if (!this.memory.isBeingAttacked) {
-        this.memory.isBeingAttacked = this.find(FIND_HOSTILE_CREEPS).length > 0;
-      }
-
-      this._isBeingAttacked = this.memory.isBeingAttacked;
+    if (!this._hostiles) {
+      this._hostiles = this.find(FIND_HOSTILE_CREEPS);
     }
 
-    return this._isBeingAttacked;
+    return this._hostiles;
+  }
+});
+
+Object.defineProperty(Room.prototype, 'creeps', {
+  configurable: true,
+  get: function () {
+    if (!this._creeps) {
+      this._creeps = _.groupBy(this.find(FIND_MY_CREEPS), 'memory.role');
+    }
+
+    return this._creeps;
   }
 });

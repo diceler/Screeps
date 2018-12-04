@@ -21,8 +21,3 @@ global.SPAWN_PRIORITY = {
   [ROLE_UPGRADER]: 12,
   [ROLE_BUILDER]: 13,
 };
-
-/**
- * Creep body types
- */
-global.DEFAULT_CREEP_BODY = [WORK, CARRY, MOVE];

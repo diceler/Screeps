@@ -5,19 +5,6 @@ class Military extends CreepBase {
   constructor(creep) {
     super(creep);
   }
-
-  findHostile() {
-    const hostiles = this.creep.room.find(FIND_HOSTILE_CREEPS);
-    const hostile = _.first(hostiles);
-
-    if (hostile) {
-      this.creep.memory.hostileId = hostile.id;
-    } else {
-      this.memory.isBeingAttacked = false;
-    }
-
-    return hostile;
-  }
 }
 
 module.exports = Military;

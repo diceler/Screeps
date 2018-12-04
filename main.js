@@ -52,16 +52,16 @@ function executeLoops() {
   // for (const flag in Game.flags) {
   //   Game.flags[flag].loop();
   // }
-  for (const creep in Game.creeps) {
-    Game.creeps[creep].loop();
-  }
   for (const room in Game.rooms) {
     Game.rooms[room].loop();
+  }
+  for (const creep in Game.creeps) {
+    Game.creeps[creep].loop();
   }
   for (const structure in Game.structures) {
     Game.structures[structure].loop();
   }
-  for (const constructionSite in Memory.constructionSitea) {
+  for (const constructionSite in Memory.constructionSites) {
     Game.constructionSites[constructionSite].loop();
   }
 }

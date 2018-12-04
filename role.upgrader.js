@@ -9,7 +9,7 @@ class Upgrader extends Worker {
   static body(rcl) {
     switch (rcl) {
       default:
-        return DEFAULT_CREEP_BODY;
+        return [parts(WORK, 2), parts(CARRY, 1), parts(MOVE, 1)];
     }
   }
 
@@ -26,14 +26,14 @@ class Upgrader extends Worker {
     if (this.creep.memory.upgrading) {
       const controller = this.creep.room.controller;
 
-      if (!controller.signedByMe) {
+      if (controller.signedByMe) {
+        if (this.creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
+          this.creep.moveTo(controller);
+        }
+      } else {
         if (this.creep.signController(controller, `Occupied by ${Memory.USERNAME}`) === ERR_NOT_IN_RANGE) {
           this.creep.moveTo(controller);
         }
-      }
-
-      if (this.creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
-        this.creep.moveTo(controller);
       }
     } else {
       this.recharge()

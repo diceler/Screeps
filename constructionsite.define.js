@@ -25,25 +25,3 @@ Object.defineProperty(ConstructionSite.prototype, 'memory', {
     Memory.constructionSite[this.id] = value;
   }
 });
-
-Object.defineProperty(ConstructionSite.prototype, 'created', {
-  configurable: true,
-  get: function () {
-    if (!this._created) {
-      if (!this.memory.created) {
-        this.memory.created = Game.tick - 1; // Set 'created' to 1 tick ago due to tick life cycle.
-      }
-
-      this._created = this.memory.created;
-    }
-
-    return this._created;
-  }
-});
-
-Object.defineProperty(ConstructionSite.prototype, 'ticksSinceProgress', {
-  configurable: true,
-  get: function () {
-    return Game.time - (this.memory.lastProgressTime || this.created);
-  }
-});
