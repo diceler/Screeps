@@ -10,6 +10,10 @@ Room.prototype.loop = function () {
     });
   }
 
+  if (!this.controller.hasSufficientUpgraders) {
+    this.room.createSpawnRequest(this.id, ROLE_UPGRADER);
+  }
+
   // TODO: Loop through containers and run their .tick.
 };
 

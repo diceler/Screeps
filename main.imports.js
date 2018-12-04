@@ -16,7 +16,6 @@ require('source.define');
 require('structure.define');
 require('structure.extend');
 require('spawn.extend');
-require('controller.extend');
 require('controller.define');
 // require('flag.define');
 // require('flag.extend');
