@@ -27,8 +27,11 @@ class Builder extends Worker {
 
       if (!this.creep.memory.csId) {
         const constructionSites = this.creep.room.find(FIND_CONSTRUCTION_SITES);
-        constructionSite = _.first(constructionSites);
-        this.creep.memory.csId = constructionSite.id;
+
+        if (_.size(constructionSites)) {
+          constructionSite = _.first(constructionSites);
+          this.creep.memory.csId = constructionSite.id;
+        }
       } else {
         constructionSite = getObjectById(this.creep.memory.csId);
       }
