@@ -9,6 +9,8 @@ Room.prototype.loop = function () {
       this.createSpawnRequest(source.id, ROLE_HARVESTER, {sourceId: source.id});
     });
   }
+
+  // TODO: Loop through containers and run their .tick.
 };
 
 Room.prototype.createSpawnRequest = function (requesterId, role, memory = {}) {

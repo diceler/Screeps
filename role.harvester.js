@@ -39,10 +39,42 @@ class Harvester extends Worker {
     if (!this.creep.isFull) {
       this.harvest();
     } else {
-      if (!this.hasPickup) {
-        this.creep.room.createSpawnRequest(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
-        this.deliver();
+      if (this.creep.memory.containerId) {
+        const container = getObjectById(this.creep.memory.containerId);
+
+        if (container) {
+          if (container instanceof StructureContainer) {
+            if (this.creep.transfer(container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+              this.creep.moveTo(container);
+            }
+          } else if (container instanceof ConstructionSite) {
+            if (this.creep.build(container)) {
+              this.creep.moveTo(container);
+            }
+          }
+        } else {
+          delete this.creep.memory.containerId;
+        }
+      } else {
+        const containersOnMe = _.filter(this.creep.pos.lookFor(LOOK_STRUCTURES), 'type', STRUCTURE_CONTAINER);
+
+        if (_.size(containersOnMe)) {
+          this.creep.memory.containerId = _.first(containersOnMe).id;
+        } else {
+          const constructionSitesOnMe = _.filter(this.creep.pos.lookFor(LOOK_CONSTRUCTION_SITES), 'type', STRUCTURE_CONTAINER);
+
+          if (_.size(constructionSitesOnMe)) {
+            this.creep.memory.containerId = _.first(constructionSitesOnMe).id;
+          } else {
+            this.creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
+          }
+        }
       }
+
+      // if (!this.hasPickup) {
+      //   this.creep.room.createSpawnRequest(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
+      //   this.deliver();
+      // }
     }
   }
 }
