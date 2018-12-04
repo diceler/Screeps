@@ -11,7 +11,7 @@ Room.prototype.loop = function () {
   }
 
   if (!this.controller.hasSufficientUpgraders) {
-    this.room.createSpawnRequest(this.id, ROLE_UPGRADER);
+    this.createSpawnRequest(this.id, ROLE_UPGRADER);
   }
 
   if (this.find(FIND_CONSTRUCTION_SITES)) {
