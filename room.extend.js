@@ -14,6 +14,12 @@ Room.prototype.loop = function () {
     this.room.createSpawnRequest(this.id, ROLE_UPGRADER);
   }
 
+  if (this.find(FIND_CONSTRUCTION_SITES)) {
+    if (!_.size(this.creeps[ROLE_BUILDER])) {
+      this.createSpawnRequest(this.id, ROLE_BUILDER);
+    }
+  }
+
   // TODO: Loop through containers and run their .tick.
 };
 
