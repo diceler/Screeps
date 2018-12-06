@@ -55,11 +55,11 @@ Object.defineProperty(Source.prototype, 'occupied', {
   configurable: true,
   get: function () {
     if (!this._occupied) {
-      // const linkedCreeps = _.filter(Game.creeps, {room: {name: this.room.name}, memory: {sourceId: this.id}});
-      // const totalWorkParts = _.sum(linkedCreeps, creep => _.size(_.filter(creep.body, 'type', WORK)));
-      // const harvestPower = totalWorkParts * HARVEST_POWER;
-      // this._occupied = (_.size(linkedCreeps) >= this.slots || harvestPower >= MAX_HARVEST_POWER);
-      this._occupied = _.some(Game.creeps, {room: {name: this.room.name}, memory: {role: ROLE_HARVESTER, sourceId: this.id}});
+      const linkedCreeps = _.filter(Game.creeps, {room: {name: this.room.name}, memory: {sourceId: this.id}});
+      const totalWorkParts = _.sum(linkedCreeps, creep => _.size(_.filter(creep.body, 'type', WORK)));
+      const harvestPower = totalWorkParts * HARVEST_POWER;
+      this._occupied = (_.size(linkedCreeps) >= this.slots || harvestPower >= MAX_HARVEST_POWER);
+      // this._occupied = _.some(Game.creeps, {room: {name: this.room.name}, memory: {role: ROLE_HARVESTER, sourceId: this.id}});
     }
 
     return this._occupied;
