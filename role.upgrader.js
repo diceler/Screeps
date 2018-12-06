@@ -14,15 +14,15 @@ class Upgrader extends Worker {
   }
 
   get allowedToRecharge() {
-    // If current energy is >= to 25% of the total current energy availability allow it to recharge.
-    const {energyAvailable, energyCapacityAvailable} = this.creep.room;
-    const enoughEnergyAvailable = Math.floor((energyAvailable / energyCapacityAvailable) * 100) >= 25;
+    const anyUnoccupiedSources = _.some(this.creep.room.sources, {occupied: false});
 
-    if (!this._canRecharge) {
-      this._canRecharge = enoughEnergyAvailable;
+    if (anyUnoccupiedSources) {
+      return false;
+    } else {
+      // If current energy is >= to 25% of the total current energy availability allow it to recharge.
+      const {energyAvailable, energyCapacityAvailable} = this.creep.room;
+      return Math.floor((energyAvailable / energyCapacityAvailable) * 100) >= 25;
     }
-
-    return this._canRecharge;
   }
 
   tick() {
