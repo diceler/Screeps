@@ -13,6 +13,18 @@ class Upgrader extends Worker {
     }
   }
 
+  get allowedToRecharge() {
+    // If current energy is >= to 25% of the total current energy availability allow it to recharge.
+    const {energyAvailable, energyCapacityAvailable} = this.creep.room;
+    const enoughEnergyAvailable = Math.floor((energyAvailable / energyCapacityAvailable) * 100) >= 25;
+
+    if (!this._canRecharge) {
+      this._canRecharge = enoughEnergyAvailable;
+    }
+
+    return this._canRecharge;
+  }
+
   tick() {
     if (this.creep.memory.upgrading && this.creep.isEmpty) {
       this.creep.memory.upgrading = false;
@@ -36,10 +48,7 @@ class Upgrader extends Worker {
         }
       }
     } else {
-      // if (_.every(this.creep.room.sources, 'occupied')) {
-      let harvestersInRoom = _.size(_.filter(Game.creeps, {memory: {role: ROLE_HARVESTER}, room: {name: this.creep.room.name}}));
-
-      if (harvestersInRoom > 1) {
+      if (this.allowedToRecharge) {
         this.recharge();
       }
     }
