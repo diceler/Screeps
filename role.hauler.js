@@ -33,7 +33,7 @@ class Hauler extends Worker {
     }
   }
 
-  deliver() {
+  store() {
     let storage;
 
     if (!this.creep.memory.storageId) {
@@ -48,11 +48,13 @@ class Hauler extends Worker {
 
       if (anyMyStorages) {
         storage = _.first(storages);
+        this.creep.memory.storageId = storage.id;
       } else {
         const anyContainers = _.some(storages, 'structureType', STRUCTURE_CONTAINER);
 
         if (anyContainers) {
           storage = _.first(_.filter(storages, 'structureType', STRUCTURE_CONTAINER));
+          this.creep.memory.storageId = storage.id;
         }
       }
     } else {
@@ -80,7 +82,7 @@ class Hauler extends Worker {
     if (!this.creep.isFull) {
       this.collect();
     } else {
-      this.deliver();
+      this.store();
     }
   }
 }
