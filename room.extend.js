@@ -18,7 +18,7 @@ Room.prototype.loop = function () {
     const constructionSitesInRoom = _.size(_.filter(Game.constructionSites, 'room.name', this.name));
 
     if (constructionSitesInRoom) {
-      const notEnoughBuilders = Math.floor(constructionSitesInRoom / 10) > _.size(this.creeps[ROLE_BUILDER]);
+      const notEnoughBuilders = (constructionSitesInRoom / 10) > _.size(this.creeps[ROLE_BUILDER]);
 
       if (notEnoughBuilders) {
         this.createSpawnRequest(this.name, ROLE_BUILDER);
