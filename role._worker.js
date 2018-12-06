@@ -33,6 +33,7 @@ class Worker extends CreepBase {
         case ERR_NOT_IN_RANGE:
           this.creep.moveTo(storage);
           break;
+        case OK:
         case ERR_FULL:
           delete this.creep.memory.storageId;
           break;
@@ -56,6 +57,7 @@ class Worker extends CreepBase {
         case ERR_NOT_IN_RANGE:
           this.creep.moveTo(storage);
           break;
+        case OK:
         case ERR_NOT_ENOUGH_RESOURCES:
           delete this.creep.memory.storageId;
           break;
