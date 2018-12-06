@@ -12,9 +12,12 @@ class Worker extends CreepBase {
     if (anyUnoccupiedSources) {
       return false;
     } else {
-      // If current energy is >= to 25% of the total current energy availability allow it to recharge.
       const {energyAvailable, energyCapacityAvailable} = this.creep.room;
-      return Math.floor((energyAvailable / energyCapacityAvailable) * 100) >= 25;
+      // If current energy is >= to 25% of the total current energy availability allow it to recharge.
+      // return Math.floor((energyAvailable / energyCapacityAvailable) * 100) >= 25;
+
+      // If current available energy is at minimum 200 allow creep to recharge.
+      return (energyCapacityAvailable - energyAvailable) > MIN_ENERGY_AVAILABLE;
     }
   }
 
