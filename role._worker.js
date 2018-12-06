@@ -32,30 +32,6 @@ class Worker extends CreepBase {
     return storage;
   }
 
-  deliver() {
-    let storage;
-
-    if (!this.creep.memory.storageId) {
-      storage = this.findStorage(structure => structure.storesEnergy && !structure.isFull && structure.structureType !== STRUCTURE_CONTAINER);
-    } else {
-      storage = getObjectById(this.creep.memory.storageId);
-    }
-
-    if (storage) {
-      let actionResult = this.creep.transfer(storage, RESOURCE_ENERGY);
-
-      switch (actionResult) {
-        case ERR_NOT_IN_RANGE:
-          this.creep.moveTo(storage);
-          break;
-        case OK:
-        case ERR_FULL:
-          delete this.creep.memory.storageId;
-          break;
-      }
-    }
-  }
-
   recharge() {
     let storage;
 

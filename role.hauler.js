@@ -33,6 +33,49 @@ class Hauler extends Worker {
     }
   }
 
+  deliver() {
+    let storage;
+
+    if (!this.creep.memory.storageId) {
+      const storages = _.filter(this.creep.room.structures, structure => structure.storesEnergy && !structure.isFull);
+      const myStorageStructures = [
+        STRUCTURE_EXTENSION,
+        STRUCTURE_SPAWN,
+        STRUCTURE_STORAGE,
+        // TODO: Add other STRUCTURE types as I level up.
+      ];
+      const anyMyStorages = _.some(storages, ({structureType}) => _.some(myStorageStructures, 'structureType', structureType));
+
+      if (anyMyStorages) {
+        storage = _.first(storages);
+      } else {
+        const anyContainers = _.some(storages, 'structureType', STRUCTURE_CONTAINER);
+
+        if (anyContainers) {
+          storage = _.first(_.filter(storages, 'structureType', STRUCTURE_CONTAINER));
+        }
+      }
+    } else {
+      storage = getObjectById(this.creep.memory.storageId);
+    }
+
+    if (storage) {
+      let actionResult = this.creep.transfer(storage, RESOURCE_ENERGY);
+
+      switch (actionResult) {
+        case ERR_NOT_IN_RANGE:
+          this.creep.moveTo(storage);
+          break;
+        case OK:
+        case ERR_FULL:
+          delete this.creep.memory.storageId;
+          break;
+      }
+    } else {
+      delete this.creep.memory.storageId;
+    }
+  }
+
   tick() {
     if (!this.creep.isFull) {
       this.collect();
