@@ -44,10 +44,10 @@ class Hauler extends Worker {
         STRUCTURE_STORAGE,
         // TODO: Add other STRUCTURE types as I level up.
       ];
-      const anyMyStorages = _.some(storages, ({structureType}) => _.some(myStorageStructures, 'structureType', structureType));
+      const myStorages = _.filter(storages, ({structureType}) => _.some(myStorageStructures, 'structureType', structureType));
 
-      if (anyMyStorages) {
-        storage = _.first(storages);
+      if (_.size(myStorages)) {
+        storage = _.first(myStorages);
         this.creep.memory.storageId = storage.id;
       } else {
         const anyContainers = _.some(storages, 'structureType', STRUCTURE_CONTAINER);
