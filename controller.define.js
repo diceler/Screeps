@@ -19,7 +19,7 @@ Object.defineProperty(StructureController.prototype, 'hasSufficientUpgraders', {
     const harvestersInRoom = _.size(this.room.creeps[ROLE_HARVESTER]);
 
     if (harvestersInRoom > 1) {
-      return Math.floor(harvestersInRoom / 2) <= upgraders;
+      return Math.floor(harvestersInRoom / HARVESTERS_PER_UPGRADER) <= upgraders;
     }
 
     return true;
