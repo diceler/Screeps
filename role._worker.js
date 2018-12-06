@@ -17,7 +17,7 @@ class Worker extends CreepBase {
       // return Math.floor((energyAvailable / energyCapacityAvailable) * 100) >= 25;
 
       // If current available energy is at minimum 200 allow creep to recharge.
-      return (energyCapacityAvailable - energyAvailable) > MIN_ENERGY_AVAILABLE;
+      return energyAvailable > MIN_ENERGY_AVAILABLE;
     }
   }
 
