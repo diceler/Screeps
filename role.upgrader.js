@@ -36,7 +36,10 @@ class Upgrader extends Worker {
         }
       }
     } else {
-      if (_.every(this.creep.room.sources, 'occupied')) {
+      // if (_.every(this.creep.room.sources, 'occupied')) {
+      let harvestersInRoom = _.size(_.filter(Game.creeps, {memory: {role: ROLE_HARVESTER}, room: {name: this.creep.room.name}}));
+
+      if (harvestersInRoom > 1) {
         this.recharge();
       }
     }
