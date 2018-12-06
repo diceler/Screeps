@@ -8,21 +8,21 @@ Room.prototype.loop = function () {
     _.forEach(unoccupiedSources, source => {
       this.createSpawnRequest(source.id, ROLE_HARVESTER, {sourceId: source.id});
     });
-  }
+  } else {
+    // Check if controller in room has sufficient upgraders.
+    if (!this.controller.hasSufficientUpgraders) {
+      this.createSpawnRequest(this.name, ROLE_UPGRADER);
+    }
 
-  // Check if controller in room has sufficient upgraders.
-  if (!this.controller.hasSufficientUpgraders) {
-    this.createSpawnRequest(this.name, ROLE_UPGRADER);
-  }
+    // Check if room has enough builders.
+    const constructionSitesInRoom = _.size(_.filter(Game.constructionSites, 'room.name', this.name));
 
-  // Check if room has enough builders.
-  const constructionSitesInRoom = _.size(_.filter(Game.constructionSites, 'room.name', this.name));
+    if (constructionSitesInRoom) {
+      const notEnoughBuilders = Math.floor(constructionSitesInRoom / 10) > _.size(this.creeps[ROLE_BUILDER]);
 
-  if (constructionSitesInRoom) {
-    const notEnoughBuilders = Math.floor(constructionSitesInRoom / 10) > _.size(this.creeps[ROLE_BUILDER]);
-
-    if (notEnoughBuilders) {
-      this.createSpawnRequest(this.name, ROLE_BUILDER);
+      if (notEnoughBuilders) {
+        this.createSpawnRequest(this.name, ROLE_BUILDER);
+      }
     }
   }
 
