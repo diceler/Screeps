@@ -44,7 +44,9 @@ class Builder extends Worker {
         delete this.creep.memory.csId;
       }
     } else {
-      this.recharge();
+      if (this.allowedToRecharge) {
+        this.recharge();
+      }
     }
   }
 }

@@ -13,18 +13,6 @@ class Upgrader extends Worker {
     }
   }
 
-  get allowedToRecharge() {
-    const anyUnoccupiedSources = _.some(this.creep.room.sources, {occupied: false});
-
-    if (anyUnoccupiedSources) {
-      return false;
-    } else {
-      // If current energy is >= to 25% of the total current energy availability allow it to recharge.
-      const {energyAvailable, energyCapacityAvailable} = this.creep.room;
-      return Math.floor((energyAvailable / energyCapacityAvailable) * 100) >= 25;
-    }
-  }
-
   tick() {
     if (this.creep.memory.upgrading && this.creep.isEmpty) {
       this.creep.memory.upgrading = false;
