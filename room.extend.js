@@ -10,12 +10,18 @@ Room.prototype.loop = function () {
     });
   }
 
+  // Check if controller in room has sufficient upgraders.
   if (!this.controller.hasSufficientUpgraders) {
     this.createSpawnRequest(this.name, ROLE_UPGRADER);
   }
 
-  if (_.size(_.filter(Game.constructionSites, 'room.name', this.name))) {
-    if (!_.size(this.creeps[ROLE_BUILDER])) {
+  // Check if room has enough builders.
+  const constructionSitesInRoom = _.size(_.filter(Game.constructionSites, 'room.name', this.name));
+
+  if (constructionSitesInRoom) {
+    const notEnoughBuilders = Math.floor(constructionSitesInRoom / 10) > _.size(this.creeps[ROLE_BUILDER]);
+
+    if (notEnoughBuilders) {
       this.createSpawnRequest(this.name, ROLE_BUILDER);
     }
   }
