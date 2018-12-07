@@ -23,7 +23,21 @@ StructureTower.prototype.tick = function () {
     }
   } else {
     const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.hitsMax)
-      .sort((a, b) => a.hitsMax - b.hitsMax);
+    // Sort STRUCTURE_WALL at bottom always.
+      .sort((a, b) => {
+        const ab = [a, b];
+
+        if (_.every(ab, 'structureType', STRUCTURE_WALL)) {
+          return 0;
+        }
+
+        if (_.every(ab, ({structureType}) => structureType !== STRUCTURE_WALL)) {
+          const diff = a.hitsMax - b.hitsMax;
+          return diff < 0 ? -1 : diff > 0 ? 1 : 0;
+        }
+
+        return a.structureType === STRUCTURE_WALL ? 1 : -1;
+      });
 
     if (_.size(damagedStructures)) {
       this.repair(_.first(damagedStructures));
