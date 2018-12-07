@@ -8,8 +8,8 @@ class Harvester extends Worker {
 
   static body(rcl) {
     switch (rcl) {
-      case 3:
-        return _.flatten([parts(WORK, 5), parts(MOVE, 1)]);
+      // case 3:
+      //   return _.flatten([parts(WORK, 5), parts(MOVE, 1)]);
       default:
         return _.flatten([parts(WORK, 1), parts(CARRY, 1), parts(MOVE, 1)]);
     }

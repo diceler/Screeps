@@ -17,3 +17,4 @@ require('role.hauler');
 require('role.upgrader');
 require('role.builder');
 require('role.defender');
+require('tower.extend');
