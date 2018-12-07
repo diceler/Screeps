@@ -20,16 +20,17 @@ StructureTower.prototype.tick = function () {
     let structure;
 
     if (!this.memory.structureId) {
-      const decayedContainers = _.filter(this.room.structures, structure => structure.structureType === STRUCTURE_CONTAINER && structure.hits < structure.hitsMax);
+      const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.rclHitsMin)
+        .sort((a, b) => a.hitsMax - b.hitsMax);
 
-      if (_.size(decayedContainers)) {
-        structure = _.first(decayedContainers);
+      if (_.size(damagedStructures)) {
+        structure = _.first(damagedStructures);
         this.memory.structureId = structure.id;
       }
     } else {
       structure = getObjectById(this.memory.structureId);
 
-      if (structure.hits === structure.hitsMax) {
+      if (structure.hits >= structure.rclHitsMin) {
         delete this.memory.structureId;
       }
     }

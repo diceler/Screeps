@@ -26,6 +26,28 @@ Object.defineProperty(Structure.prototype, 'memory', {
   }
 });
 
+Object.defineProperty(Structure.prototype, 'rclHitsMin', {
+  configurable: true,
+  get: function () {
+    if (this.structureType === STRUCTURE_WALL) {
+      switch (this.room.controller.level) {
+        case 2:
+          return this.hits < 10000;
+        case 3:
+          return this.hits < 50000;
+        case 4:
+          return this.hits < 100000;
+        case 5:
+          return this.hits < 500000;
+        default:
+          return this.hits < 1000000;
+      }
+    } else {
+      return this.hitsMax
+    }
+  }
+});
+
 Object.defineProperty(Structure.prototype, 'storesEnergy', {
   configurable: true,
   get: function () {
