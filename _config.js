@@ -16,7 +16,6 @@ global.WALL_RCL_4_HITS_MIN = 100000;
 global.WALL_RCL_5_HITS_MIN = 500000;
 global.WALL_RCL_6_HITS_MIN = 1000000;
 
-
 /**
  * Spawn priority
  */

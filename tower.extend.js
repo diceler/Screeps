@@ -22,7 +22,7 @@ StructureTower.prototype.tick = function () {
       }
     }
   } else {
-    const damagedStructures = _.filter(this.room.structures, structure => !structure.rclHitsMin || structure.hits < structure.hitsMax)
+    const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.rclHitsMin)
     // Sort STRUCTURE_WALL at bottom always.
       .sort((a, b) => {
         const ab = [a, b];
@@ -34,7 +34,7 @@ StructureTower.prototype.tick = function () {
         let noneAreWalls = _.every(ab, ({structureType}) => structureType !== STRUCTURE_WALL);
 
         if (noneAreWalls) {
-          const diff = a.getRclHitsMin() - b.getRclHitsMin();
+          const diff = a.rclHitsMin - b.rclHitsMin;
           return diff < 0 ? -1 : diff > 0 ? 1 : 0;
         }
 
