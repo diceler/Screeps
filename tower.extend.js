@@ -25,7 +25,7 @@ StructureTower.prototype.tick = function () {
     let structure;
 
     if (!this.memory.structureId) {
-      const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.rclHitsMin)
+      const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.hitsMax)
         .sort((a, b) => a.hitsMax - b.hitsMax);
 
       if (_.size(damagedStructures)) {
