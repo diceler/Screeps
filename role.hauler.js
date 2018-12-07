@@ -34,10 +34,18 @@ class Hauler extends Worker {
   }
 
   tick() {
-    if (!this.creep.isFull) {
-      this.collect();
-    } else {
+    if (this.creep.memory.hauling && this.creep.isEmpty) {
+      this.creep.memory.hauling = false;
+    }
+
+    if (!this.creep.memory.hauling && this.creep.isFull) {
+      this.creep.memory.hauling = true;
+    }
+
+    if (this.creep.memory.hauling) {
       this.deliver();
+    } else {
+      this.collect();
     }
   }
 }
