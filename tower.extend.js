@@ -1,6 +1,11 @@
 'use strict';
 
 StructureTower.prototype.tick = function () {
+  // Tower actions cost 10 energy. Skip tick if current energy is less than that.
+  if (this.energy < 10) {
+    return;
+  }
+
   if (_.size(this.room.hostiles)) {
     let hostile;
 
