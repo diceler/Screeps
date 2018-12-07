@@ -22,28 +22,11 @@ StructureTower.prototype.tick = function () {
       }
     }
   } else {
-    let structure;
+    const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.hitsMax)
+      .sort((a, b) => a.hitsMax - b.hitsMax);
 
-    if (!this.memory.structureId) {
-      const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.hitsMax)
-        .sort((a, b) => a.hitsMax - b.hitsMax);
-
-      if (_.size(damagedStructures)) {
-        structure = _.first(damagedStructures);
-        this.memory.structureId = structure.id;
-      }
-    } else {
-      structure = getObjectById(this.memory.structureId);
-
-      if (structure.hits >= structure.rclHitsMin) {
-        delete this.memory.structureId;
-      }
-    }
-
-    if (structure) {
-      if (this.repair(structure) === ERR_INVALID_TARGET) {
-        delete this.memory.structureId;
-      }
+    if (_.size(damagedStructures)) {
+      this.repair(_.first(damagedStructures));
     }
   }
 };
