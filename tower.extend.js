@@ -28,6 +28,10 @@ StructureTower.prototype.tick = function () {
       }
     } else {
       structure = getObjectById(this.memory.structureId);
+
+      if (structure.hits === structure.hitsMax) {
+        delete this.memory.structureId;
+      }
     }
 
     if (structure) {
