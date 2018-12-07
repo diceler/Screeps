@@ -25,9 +25,9 @@ StructureTower.prototype.tick = function () {
       if (_.size(decayedContainers)) {
         structure = _.first(decayedContainers);
         this.memory.structureId = structure.id;
-      } else {
-        structure = getObjectById(this.memory.structureId);
       }
+    } else {
+      structure = getObjectById(this.memory.structureId);
     }
 
     if (structure) {
