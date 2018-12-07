@@ -32,15 +32,15 @@ Object.defineProperty(Structure.prototype, 'rclHitsMin', {
     if (this.structureType === STRUCTURE_WALL) {
       switch (this.room.controller.level) {
         case 2:
-          return this.hits < 10000;
+          return 10000;
         case 3:
-          return this.hits < 50000;
+          return 50000;
         case 4:
-          return this.hits < 100000;
+          return 100000;
         case 5:
-          return this.hits < 500000;
+          return 500000;
         default:
-          return this.hits < 1000000;
+          return 1000000;
       }
     } else {
       return this.hitsMax
