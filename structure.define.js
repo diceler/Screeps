@@ -26,6 +26,13 @@ Object.defineProperty(Structure.prototype, 'memory', {
   }
 });
 
+Object.defineProperty(Structure.prototype, 'rclHitsMin', {
+  configurable: true,
+  get: function () {
+    return this.hits >= this.getRclHitsMin();
+  }
+});
+
 Object.defineProperty(Structure.prototype, 'storesEnergy', {
   configurable: true,
   get: function () {
