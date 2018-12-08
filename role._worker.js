@@ -36,7 +36,7 @@ class Worker extends CreepBase {
     let storage;
 
     if (!this.creep.memory.storageId) {
-      storage = this.findStorage(structure => structure.storesEnergy && !structure.isFull && structure.structureType !== STRUCTURE_CONTAINER);
+      storage = this.findStorage(structure => structure.storesEnergy && !structure.isFull && !structure.isWithdrawOnly);
     } else {
       storage = getObjectById(this.creep.memory.storageId);
     }
