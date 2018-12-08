@@ -8,7 +8,7 @@ Object.defineProperty(Room.prototype, 'sources', {
         this.memory.sources = _.map(this.find(FIND_SOURCES), 'id');
       }
 
-      this._sources = this.memory.sources.map(id => Game.getObjectById(id));
+      this._sources = this.memory.sources.map(id => getObjectById(id));
     }
 
     return this._sources;
@@ -45,7 +45,7 @@ Object.defineProperty(Room.prototype, 'structures', {
         this.memory.structures = _.map(this.find(FIND_STRUCTURES), 'id');
       }
 
-      this._structures = this.memory.structures.map(id => Game.getObjectById(id));
+      this._structures = this.memory.structures.map(id => getObjectById(id));
     }
 
     return this._structures;

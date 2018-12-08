@@ -28,9 +28,10 @@ class Harvester extends Worker {
   }
 
   harvest() {
-    let source = Game.getObjectById(this.creep.memory.sourceId);
+    const source = getObjectById(this.creep.memory.sourceId);
 
     if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
+      // TODO: Implement logic for moving Harvester to Container if it has no CARRY parts.
       this.creep.moveTo(source);
     }
   }
@@ -63,10 +64,18 @@ class Harvester extends Worker {
     } else {
       if (!this.hasPickup) {
         this.creep.room.requestCreep(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
+      }
+
+      const source = getObjectById(this.creep.memory.sourceId);
+
+      if (source.container) {
+        if (this.creep.transfer(source.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+          this.creep.moveTo(source.container);
+        }
+      } else if (!this.hasPickup) {
         this.deliver();
       }
     }
-
 
     // if (_.every(this.creep.room.sources, 'occupied') && this.creep.memory.csId) {
     //   this.buildContainer();

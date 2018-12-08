@@ -28,6 +28,16 @@ class Hauler extends Worker {
       harvester.memory.hasPickup = false;
     }
 
+    const source = getObjectById(harvester.memory.sourceId);
+
+    if (source.container && !source.container.isEmpty) {
+      if (this.creep.withdraw(source.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        this.creep.moveTo(source.container);
+      }
+
+      return;
+    }
+
     if (harvester.transfer(this.creep, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
       this.creep.moveTo(harvester);
     }

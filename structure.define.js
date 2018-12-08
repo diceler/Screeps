@@ -93,3 +93,13 @@ Object.defineProperty(Structure.prototype, 'isEmpty', {
     return this._isEmpty;
   }
 });
+
+Object.defineProperty(Structure.prototype, 'isWithdrawOnly', {
+  configurable: true,
+  get: function () {
+    return this.memory.withdrawOnly || false;
+  },
+  set: function (value) {
+    this.memory.withdrawOnly = value;
+  }
+});

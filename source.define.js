@@ -72,10 +72,14 @@ Object.defineProperty(Source.prototype, 'container', {
     if (!this._container) {
       if (!this.memory.containerId) {
         const containers = _.filter(this.room.structures, 'structureType', STRUCTURE_CONTAINER);
-        const container = _.find(containers, ({pos}) => pos.isNearTo(this.pos));
 
-        if (container) {
-          this.memory.containerId = container.id;
+        if (_.size(containers)) {
+          const container = _.find(containers, ({pos}) => pos.isNearTo(this.pos));
+
+          if (container) {
+            this.memory.containerId = container.id;
+            container.isWithdrawOnly = true;
+          }
         }
       }
 
