@@ -78,7 +78,7 @@ Object.defineProperty(Source.prototype, 'container', {
 
           if (container) {
             this.memory.containerId = container.id;
-            container.isWithdrawOnly = true;
+            container.memory.withdrawOnly = true;
           }
         }
       }

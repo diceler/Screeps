@@ -96,7 +96,6 @@ Object.defineProperty(Structure.prototype, 'isEmpty', {
 
 Object.defineProperty(Structure.prototype, 'isWithdrawOnly', {
   configurable: true,
-  writable: true,
   get: function () {
     return this.memory.withdrawOnly || false;
   },
