@@ -36,16 +36,6 @@ function clearMemory() {
       delete Memory.flags[flag];
     }
   }
-  for (const structure in Memory.structures) {
-    if (!Game.structures[structure]) {
-      delete Memory.structures[structure];
-    }
-  }
-  for (const constructionSite in Memory.constructionSites) {
-    if (!Game.constructionSites[constructionSite]) {
-      delete Memory.constructionSites[constructionSite];
-    }
-  }
 }
 
 function executeLoops() {
