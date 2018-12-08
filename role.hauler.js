@@ -30,7 +30,7 @@ class Hauler extends Worker {
 
     const source = getObjectById(harvester.memory.sourceId);
 
-    if (source.container && !source.container.isEmpty) {
+    if (source.container) {
       if (this.creep.withdraw(source.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
         this.creep.moveTo(source.container);
       }
