@@ -65,3 +65,10 @@ Object.defineProperty(Source.prototype, 'occupied', {
     return this._occupied;
   }
 });
+
+Object.defineProperty(Source.prototype, 'occupied', {
+  configurable: true,
+  get: function () {
+
+  }
+});

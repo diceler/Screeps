@@ -62,7 +62,7 @@ class Harvester extends Worker {
       this.harvest();
     } else {
       if (!this.hasPickup) {
-        this.creep.room.createSpawnRequest(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
+        this.creep.room.requestCreep(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
         this.deliver();
       }
     }
