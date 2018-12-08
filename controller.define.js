@@ -25,3 +25,26 @@ Object.defineProperty(StructureController.prototype, 'hasSufficientUpgraders', {
     return true;
   }
 });
+
+Object.defineProperty(StructureController.prototype, 'container', {
+  configurable: true,
+  get: function () {
+    if (!this._container) {
+      if (!this.memory.containerId) {
+        const containers = _.filter(this.room.structures, 'structureType', STRUCTURE_CONTAINER);
+
+        if (_.size(containers)) {
+          const container = _.find(containers, ({pos}) => pos.inRangeTo(this.pos, 3));
+
+          if (container) {
+            this.memory.containerId = container.id;
+          }
+        }
+      }
+
+      return this._container = getObjectById(this.memory.containerId);
+    }
+
+    return this._container;
+  }
+});

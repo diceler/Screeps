@@ -4,6 +4,7 @@ const Worker = require('role._worker');
 class Upgrader extends Worker {
   constructor(creep) {
     super(creep);
+    this.controller = creep.room.controller;
   }
 
   static body(rcl) {
@@ -26,18 +27,24 @@ class Upgrader extends Worker {
     }
 
     if (this.creep.memory.upgrading) {
-      const controller = this.creep.room.controller;
-
-      if (controller.signedByMe) {
-        if (this.creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
-          this.creep.moveTo(controller);
+      if (this.controller.signedByMe) {
+        if (this.creep.upgradeController(this.controller) === ERR_NOT_IN_RANGE) {
+          this.creep.moveTo(this.controller);
         }
       } else {
-        if (this.creep.signController(controller, `Occupied by ${Memory.USERNAME}`) === ERR_NOT_IN_RANGE) {
-          this.creep.moveTo(controller);
+        if (this.creep.signController(this.controller, `Occupied by ${Memory.USERNAME}`) === ERR_NOT_IN_RANGE) {
+          this.creep.moveTo(this.controller);
         }
       }
     } else {
+      if (this.controller.container && !this.controller.container.isEmpty) {
+        if (this.creep.withdraw(this.controller.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+          this.creep.moveTo(this.controller.container);
+        }
+
+        return;
+      }
+
       if (this.allowedToRecharge) {
         this.recharge();
       }
