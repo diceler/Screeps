@@ -3,7 +3,8 @@
 Object.defineProperty(Creep.prototype, 'isFull', {
   configurable: true,
   get: function () {
-    return _.sum(this.carry) === this.carryCapacity;
+    // Some creeps are spawned without CARRY parts.
+    return this.carryCapacity > 0 ? _.sum(this.carry) === this.carryCapacity : false;
   }
 });
 

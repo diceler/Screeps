@@ -66,9 +66,22 @@ Object.defineProperty(Source.prototype, 'occupied', {
   }
 });
 
-Object.defineProperty(Source.prototype, 'occupied', {
+Object.defineProperty(Source.prototype, 'container', {
   configurable: true,
   get: function () {
+    if (!this._container) {
+      if (!this.memory.containerId) {
+        const containers = _.filter(this.room.structures, 'structureType', STRUCTURE_CONTAINER);
+        const container = _.find(containers, ({pos}) => pos.isNearTo(this.pos));
 
+        if (container) {
+          this.memory.containerId = container.id;
+        }
+      }
+
+      return this._container = getObjectById(this.memory.containerId);
+    }
+
+    return this._container;
   }
 });
