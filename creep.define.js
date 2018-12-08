@@ -24,6 +24,7 @@ Object.defineProperty(Creep.prototype, 'isFatigued', {
 
 Object.defineProperty(Creep.prototype, 'role', {
   configurable: true,
+  writable: true,
   get: function () {
     if (!this._role) {
       this._role = new roles[this.memory.role](this);
