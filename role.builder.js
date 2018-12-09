@@ -8,6 +8,11 @@ class Builder extends Worker {
 
   static body(rcl) {
     switch (rcl) {
+      case 8:
+      case 7:
+      case 6:
+      case 5:
+      case 4:
       case 3:
         return _.flatten([parts(WORK, 4), parts(CARRY, 4), parts(MOVE, 4)]);
       case 2:

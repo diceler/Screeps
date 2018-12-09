@@ -9,8 +9,14 @@ class Upgrader extends Worker {
 
   static body(rcl) {
     switch (rcl) {
+      case 8:
+      case 7:
+      case 6:
+      case 5:
+      case 4:
+      case 3:
       case 2:
-        return _.flatten([parts(WORK, 4), parts(CARRY, 1), parts(MOVE, 2)]);
+        return _.flatten([parts(WORK, 4), parts(CARRY, 2), parts(MOVE, 2)]);
       default:
         return _.flatten([parts(WORK, 2), parts(CARRY, 1), parts(MOVE, 1)]);
     }
