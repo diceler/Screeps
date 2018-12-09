@@ -18,7 +18,7 @@ class Harvester extends Worker {
   get hasPickup() {
     if (!this._hasPickup) {
       if (!this.creep.memory.hasPickup) {
-        this.creep.memory.hasPickup = _.some(Game.creeps, {memory: {harvesterId: this.creep.id}});
+        this.creep.memory.hasPickup = _.some(Game.creeps, 'memory.harvesterId', this.creep.id);
       }
 
       this._hasPickup = this.creep.memory.hasPickup;
@@ -27,38 +27,34 @@ class Harvester extends Worker {
     return this._hasPickup;
   }
 
-  harvest() {
-    const source = getObjectById(this.creep.memory.sourceId);
+  tick() {
+    const source = _.find(this.creep.room.sources, 'id', this.creep.memory.sourceId);
 
-    if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
-      const hasCarryParts = _.some(this.creep.body, 'type', CARRY);
+    if (!this.creep.isFull) {
+      if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
+        if (this.creep.carryCapacity !== 0) {
+          this.creep.moveTo(source);
+        } else {
+          if (source.container) {
+            if (this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
+              const creepsOnContainer = source.container.pos.lookFor(LOOK_CREEPS);
 
-      if (hasCarryParts) {
-        this.creep.moveTo(source);
-      } else {
-        if (source.container && this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
-          const creepsOnContainer = source.container.pos.lookFor(LOOK_CREEPS);
-
-          if (creepsOnContainer) {
-            _.first(creepsOnContainer).moveTo(source, {avoid: [source.container.pos]});
+              if (creepsOnContainer) {
+                _.first(creepsOnContainer).moveTo(source, {avoid: [source.container.pos]});
+              }
+            }
           }
         }
       }
-    }
-  }
-
-  tick() {
-    if (!this.creep.isFull) {
-      this.harvest();
     } else {
       if (!this.hasPickup) {
         this.creep.room.requestCreep(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
       }
 
-      const source = getObjectById(this.creep.memory.sourceId);
-
       if (source.container) {
-        if (this.creep.transfer(source.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        if (_.isEqual(this.creep.pos, source.container.pos)) {
+          this.creep.drop(RESOURCE_ENERGY);
+        } else if (this.creep.transfer(source.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
           this.creep.moveTo(source.container);
         }
       } else if (!this.hasPickup) {
