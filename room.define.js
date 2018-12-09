@@ -41,11 +41,11 @@ Object.defineProperty(Room.prototype, 'structures', {
   configurable: true,
   get: function () {
     if (!this._structures) {
-      if (Game.time % 100 === 0 || !this.memory.structures) {
-        this.memory.structures = _.map(this.find(FIND_STRUCTURES), 'id');
+      if (Game.time % 50 === 0 || !Memory.cache.rooms[this.name].structures) {
+        Memory.cache.rooms[this.name].structures = _.map(this.find(FIND_STRUCTURES), 'id');
       }
 
-      this._structures = this.memory.structures.map(id => getObjectById(id));
+      this._structures = Memory.cache.rooms[this.name].structures.map(id => getObjectById(id));
     }
 
     return this._structures;
