@@ -11,7 +11,7 @@ module.exports.loop = () => {
     Memory.MAINBASE = _.get(_.first(_.toArray(Game.structures)), 'room.name');
   }
 
-  Memory.cache = Memory.cache || {};
+  global.Cache = global.Cache || {};
 
   clearMemory();
   executeLoops();
@@ -45,8 +45,8 @@ function executeLoops() {
   //   Game.flags[flag].loop();
   // }
   for (const room in Game.rooms) {
-    Memory.cache.rooms = Memory.cache.rooms || {};
-    Memory.cache.rooms[room] = Memory.cache.rooms[room] || {};
+    Cache.rooms = Cache.rooms || {};
+    Cache.rooms[room] = Cache.rooms[room] || {};
       Game.rooms[room].loop();
   }
   for (const creep in Game.creeps) {
