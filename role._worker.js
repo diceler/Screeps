@@ -31,9 +31,9 @@ class Worker extends CreepBase {
           return 0;
         }
 
-        let noneAreWalls = _.every(ab, ({structureType}) => structureType !== STRUCTURE_CONTAINER);
+        let noneAreContainers = _.every(ab, ({structureType}) => structureType !== STRUCTURE_CONTAINER);
 
-        if (noneAreWalls) {
+        if (noneAreContainers) {
           const diff = a.storage - b.storage;
           return diff < 0 ? -1 : diff > 0 ? 1 : 0;
         }
