@@ -31,7 +31,7 @@ class Harvester extends Worker {
   tick() {
     const source = _.find(this.creep.room.sources, 'id', this.creep.memory.sourceId);
 
-    if (!this.creep.isFull) {
+    if (!this.creep.isFull || this.creep.carryCapacity === 0) {
       if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
         if (this.creep.carryCapacity !== 0) {
           this.creep.moveTo(source);
