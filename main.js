@@ -47,7 +47,7 @@ function executeLoops() {
   for (const room in Game.rooms) {
     Cache.rooms = Cache.rooms || {};
     Cache.rooms[room] = Cache.rooms[room] || {};
-      Game.rooms[room].loop();
+    Game.rooms[room].loop();
   }
   for (const creep in Game.creeps) {
     Game.creeps[creep].loop();

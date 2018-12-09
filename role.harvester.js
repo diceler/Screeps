@@ -31,21 +31,27 @@ class Harvester extends Worker {
   tick() {
     const source = _.find(this.creep.room.sources, 'id', this.creep.memory.sourceId);
 
-    if (!this.creep.isFull || this.creep.carryCapacity === 0) {
-      if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
-        if (this.creep.carryCapacity !== 0) {
-          this.creep.moveTo(source);
-        } else {
-          if (source.container) {
-            if (this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
-              const creepsOnContainer = source.container.pos.lookFor(LOOK_CREEPS);
+    if (this.creep.carryCapacity === 0) {
+      if (!this.hasPickup) {
+        this.creep.room.requestCreep(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
+      }
 
-              if (creepsOnContainer) {
-                _.first(creepsOnContainer).moveTo(source, {avoid: [source.container.pos]});
-              }
+      if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
+        if (source.container) {
+          if (this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
+            const creepsOnContainer = source.container.pos.lookFor(LOOK_CREEPS);
+
+            if (creepsOnContainer) {
+              _.first(creepsOnContainer).moveTo(source, {avoid: [source.container.pos]});
             }
           }
+        } else {
+          this.creep.moveTo(source);
         }
+      }
+    } else if (!this.creep.isFull) {
+      if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
+        this.creep.moveTo(source);
       }
     } else {
       if (!this.hasPickup) {
