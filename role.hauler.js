@@ -14,7 +14,9 @@ class Hauler extends Worker {
       case 5:
       case 4:
       case 3:
-        return _.flatten([parts(CARRY, 5), parts(MOVE, 5)]);
+        return _.flatten([parts(CARRY, 12), parts(MOVE, 4)]);
+      case 2:
+        return _.flatten([parts(CARRY, 8), parts(MOVE, 2)]);
       default:
         return _.flatten([parts(CARRY, 2), parts(MOVE, 2)]);
     }
