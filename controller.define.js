@@ -42,7 +42,7 @@ Object.defineProperty(StructureController.prototype, 'container', {
         }
       }
 
-      return this._container = getObjectById(this.memory.containerId);
+      this._container = getObjectById(this.memory.containerId);
     }
 
     return this._container;

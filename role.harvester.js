@@ -31,8 +31,19 @@ class Harvester extends Worker {
     const source = getObjectById(this.creep.memory.sourceId);
 
     if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
-      // TODO: Implement logic for moving Harvester to Container if it has no CARRY parts.
-      this.creep.moveTo(source);
+      const carryParts = _.some(this.creep.body, 'type', CARRY);
+
+      if (carryParts) {
+        this.creep.moveTo(source);
+      } else {
+        if (this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
+          const creepsOnContainer = source.container.pos.lookFor(LOOK_CREEPS);
+
+          if (creepsOnContainer) {
+            _.first(creepsOnContainer).moveTo(source, {avoid: source.container.pos});
+          }
+        }
+      }
     }
   }
 
