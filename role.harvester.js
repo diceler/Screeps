@@ -31,43 +31,21 @@ class Harvester extends Worker {
     const source = getObjectById(this.creep.memory.sourceId);
 
     if (this.creep.harvest(source) === ERR_NOT_IN_RANGE) {
-      const carryParts = _.some(this.creep.body, 'type', CARRY);
+      const hasCarryParts = _.some(this.creep.body, 'type', CARRY);
 
-      if (carryParts) {
+      if (hasCarryParts) {
         this.creep.moveTo(source);
       } else {
-        if (this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
+        if (source.container && this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
           const creepsOnContainer = source.container.pos.lookFor(LOOK_CREEPS);
 
           if (creepsOnContainer) {
-            _.first(creepsOnContainer).moveTo(source, {avoid: source.container.pos});
+            _.first(creepsOnContainer).moveTo(source, {avoid: [source.container.pos]});
           }
         }
       }
     }
   }
-
-  // buildContainer() {
-  //   const constructionSite = getObjectById(this.creep.memory.csId);
-  //
-  //   if (constructionSite) {
-  //     if (this.creep.memory.building && this.creep.isEmpty) {
-  //       this.creep.memory.building = false;
-  //     }
-  //
-  //     if (!this.creep.memory.building && this.creep.isFull) {
-  //       this.creep.memory.building = true;
-  //     }
-  //
-  //     if (this.creep.memory.building) {
-  //       this.creep.build(constructionSite);
-  //     } else {
-  //       this.harvest();
-  //     }
-  //   } else {
-  //     delete this.creep.memory.csId;
-  //   }
-  // }
 
   tick() {
     if (!this.creep.isFull) {
@@ -87,40 +65,6 @@ class Harvester extends Worker {
         this.deliver();
       }
     }
-
-    // if (_.every(this.creep.room.sources, 'occupied') && this.creep.memory.csId) {
-    //   this.buildContainer();
-    // } else {
-    //   if (!this.creep.isFull) {
-    //     this.harvest();
-    //   } else {
-    //     if (this.creep.memory.containerId) {
-    //       const container = getObjectById(this.creep.memory.containerId);
-    //
-    //       if (container) {
-    //         if (this.creep.transfer(container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-    //           this.creep.moveTo(container);
-    //         }
-    //       } else {
-    //         delete this.creep.memory.containerId;
-    //       }
-    //     } else {
-    //       const containersOnMe = _.filter(this.creep.pos.lookFor(LOOK_STRUCTURES), 'structureType', STRUCTURE_CONTAINER);
-    //
-    //       if (_.size(containersOnMe)) {
-    //         this.creep.memory.containerId = _.first(containersOnMe).id;
-    //       } else {
-    //         const constructionSitesOnMe = _.filter(this.creep.pos.lookFor(LOOK_CONSTRUCTION_SITES), 'structureType', STRUCTURE_CONTAINER);
-    //
-    //         if (_.size(constructionSitesOnMe)) {
-    //           this.creep.memory.csId = _.first(constructionSitesOnMe).id;
-    //         } else {
-    //           this.creep.pos.createConstructionSite(STRUCTURE_CONTAINER);
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   }
 }
 
