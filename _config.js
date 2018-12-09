@@ -8,6 +8,7 @@ global.roles = {};
 global.MAX_STUCK = 3;
 global.MAX_HARVEST_POWER = 10;
 global.MAX_CS_PER_BUILDER = 10;
+global.MAX_COST_PER_BUILDER = 15000;
 global.MIN_ENERGY_AVAILABLE = 200;
 global.HARVESTERS_PER_UPGRADER = 2;
 global.WALL_RCL_2_HITS_MIN = 10000;

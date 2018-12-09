@@ -15,10 +15,14 @@ Room.prototype.loop = function () {
     }
 
     // Check if room has enough builders.
-    const constructionSitesInRoom = _.size(_.filter(Game.constructionSites, 'room.name', this.name));
+    const constructionSitesInRoom = _.filter(Game.constructionSites, 'room.name', this.name);
 
-    if (constructionSitesInRoom) {
-      const notEnoughBuilders = (constructionSitesInRoom / MAX_CS_PER_BUILDER) > _.size(this.creeps[ROLE_BUILDER]);
+    if (_.size(constructionSitesInRoom)) {
+      const totalCost = _.sum(constructionSitesInRoom, 'progressTotal');
+      const totalBuildersInRoom = _.size(this.creeps[ROLE_BUILDER]);
+      const tooHighCost = (totalCost / MAX_COST_PER_BUILDER) > totalBuildersInRoom;
+      const tooManySites = (_.size(constructionSitesInRoom) / MAX_CS_PER_BUILDER) > totalBuildersInRoom;
+      const notEnoughBuilders = tooHighCost || tooManySites;
 
       if (notEnoughBuilders) {
         this.requestCreep(this.name, ROLE_BUILDER);
