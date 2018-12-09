@@ -15,11 +15,6 @@ global.ENERGY_CAPACITY_AVAILABLE = {
 };
 
 /**
- * Link constants
- */
-global.LINK_ENERGY_SOURCE = 'energy_source';
-
-/**
  * Roles
  */
 global.ROLE_HARVESTER = 'harvester';
