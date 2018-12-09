@@ -64,6 +64,17 @@ Object.defineProperty(Structure.prototype, 'storesEnergy', {
   }
 });
 
+Object.defineProperty(Structure.prototype, 'storage', {
+  configurable: true,
+  get: function () {
+    if (!this._storage) {
+      this._storage = this.storeCapacity ? _.sum(this.store) : this.energy;
+    }
+
+    return this._storage;
+  }
+});
+
 Object.defineProperty(Structure.prototype, 'isFull', {
   configurable: true,
   get: function () {

@@ -22,7 +22,24 @@ class Worker extends CreepBase {
   }
 
   findStorage(predicate) {
-    const storages = _.filter(this.creep.room.structures, predicate);
+    const storages = _.filter(this.creep.room.structures, predicate)
+    // Prioritize STRUCTURE_CONTAINER last always.
+      .sort((a, b) => {
+        const ab = [a, b];
+
+        if (_.every(ab, 'structureType', STRUCTURE_CONTAINER)) {
+          return 0;
+        }
+
+        let noneAreWalls = _.every(ab, ({structureType}) => structureType !== STRUCTURE_CONTAINER);
+
+        if (noneAreWalls) {
+          const diff = a.storage - b.storage;
+          return diff < 0 ? -1 : diff > 0 ? 1 : 0;
+        }
+
+        return a.structureType === STRUCTURE_CONTAINER ? 1 : -1;
+      });
     const storage = _.first(storages);
 
     if (storage) {

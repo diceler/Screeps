@@ -23,7 +23,7 @@ StructureTower.prototype.tick = function () {
     }
   } else {
     const damagedStructures = _.filter(this.room.structures, structure => structure.hits < structure.rclHitsMin)
-    // Sort STRUCTURE_WALL at bottom always.
+    // Prioritize STRUCTURE_WALL last always.
       .sort((a, b) => {
         const ab = [a, b];
 
