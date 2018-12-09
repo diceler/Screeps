@@ -33,7 +33,7 @@ class Hauler extends Worker {
       harvester.memory.hasPickup = false;
     }
 
-    const source = getObjectById(harvester.memory.sourceId);
+    const source = _.find(this.creep.room.sources, 'id', harvester.memory.sourceId);
 
     if (source.container) {
       if (this.creep.withdraw(source.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
