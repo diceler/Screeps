@@ -52,10 +52,17 @@ class Worker extends CreepBase {
   deliver() {
     let storage;
 
-    if (!this.creep.memory.storageId) {
-      storage = this.findStorage(structure => structure.storesEnergy && !structure.isFull && !structure.isWithdrawOnly);
-    } else {
-      storage = getObjectById(this.creep.memory.storageId);
+    // In cases of attacks make sure towers are fed energy.
+    if (_.size(this.creep.room.hostiles)) {
+      storage = _.find(this.creep.room.structures, structure => structure.structureType === STRUCTURE_TOWER && structure.energy < 500);
+    }
+
+    if (!storage) {
+      if (!this.creep.memory.storageId) {
+        storage = this.findStorage(structure => structure.storesEnergy && !structure.isFull && !structure.isWithdrawOnly);
+      } else {
+        storage = getObjectById(this.creep.memory.storageId);
+      }
     }
 
     if (storage) {

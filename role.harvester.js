@@ -58,7 +58,7 @@ class Harvester extends Worker {
         this.creep.room.requestCreep(this.creep.id, ROLE_HAULER, {harvesterId: this.creep.id});
       }
 
-      if (source.container) {
+      if (source.container && !source.container.isFull) {
         if (_.isEqual(this.creep.pos, source.container.pos)) {
           this.creep.drop(RESOURCE_ENERGY);
         } else if (this.creep.transfer(source.container, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {

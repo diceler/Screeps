@@ -11,7 +11,9 @@ StructureTower.prototype.tick = function () {
 
     if (this.memory.hostileId) {
       hostile = getObjectById(this.memory.hostileId);
-    } else {
+    }
+
+    if (!hostile) {
       hostile = _.first(this.room.hostiles);
       this.memory.hostileId = hostile.id;
     }
