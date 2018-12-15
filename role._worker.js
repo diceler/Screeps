@@ -50,7 +50,7 @@ class Worker extends CreepBase {
   }
 
   deliver() {
-    let storage = this.creep.room.storage;
+    let storage = _.size(this.creep.room.creeps[ROLE_FILLER]) ? this.creep.room.storage : undefined;
 
     // In cases of attacks make sure towers are fed energy.
     if (_.size(this.creep.room.hostiles) && !_.size(this.creeps[ROLE_FILLER])) {
