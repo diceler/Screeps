@@ -28,6 +28,17 @@ Room.prototype.loop = function () {
         this.requestCreep(this.name, ROLE_BUILDER);
       }
     }
+
+    // Spawn Fillers if Room.storage exists.
+    if (this.controller.level >= 4) {
+      if (this.storage) {
+        const fillersInRoom = _.size(this.creeps[ROLE_FILLER]);
+
+        if (!fillersInRoom) {
+          this.requestCreep(this.name, ROLE_FILLER);
+        }
+      }
+    }
   }
 
   // TODO: Loop through containers and run their .tick.
@@ -47,7 +58,7 @@ Room.prototype.requestCreep = function (requesterId, role, memory = {}) {
       role,
       memory: _.assign({}, memory, {base: this.name, role}),
       priority: SPAWN_PRIORITY[role],
-      created: Game.time,
+      created: Game.time, // Not used for anything atm.
     });
 
     return OK;

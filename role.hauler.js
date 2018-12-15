@@ -9,14 +9,17 @@ class Hauler extends Worker {
   static body(rcl) {
     switch (rcl) {
       case 2:
-        return _.flatten([parts(CARRY, 8), parts(MOVE, 2)]);
+        return _.flatten([parts(CARRY, 6), parts(MOVE, 3)]);
       case 3:
+        return _.flatten([parts(CARRY, 10), parts(MOVE, 5)]);
       case 4:
+        return _.flatten([parts(CARRY, 16), parts(MOVE, 8)]);
       case 5:
+        return _.flatten([parts(CARRY, 24), parts(MOVE, 12)]);
       case 6:
       case 7:
       case 8:
-        return _.flatten([parts(CARRY, 12), parts(MOVE, 4)]);
+        return _.flatten([parts(CARRY, 30), parts(MOVE, 15)]);
       default:
         return _.flatten([parts(CARRY, 2), parts(MOVE, 2)]);
     }
