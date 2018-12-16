@@ -40,10 +40,10 @@ class Filler extends Worker {
 
           switch (this.creep.memory.fill) {
             case STRUCTURE_EXTENSION:
-              structures = structuresInRoom[STRUCTURE_EXTENSION] || structuresInRoom[STRUCTURE_SPAWN];
+              structures = _.filter(structuresInRoom[STRUCTURE_EXTENSION], 'isFull', false);
               break;
             case STRUCTURE_TOWER:
-              structures = structuresInRoom[STRUCTURE_TOWER];
+              structures = _.filter(structuresInRoom[STRUCTURE_TOWER], 'isFull', false);
               break;
             case STRUCTURE_CONTAINER:
               structures = _.filter(structuresInRoom[STRUCTURE_CONTAINER], 'isWithdrawOnly', false);
