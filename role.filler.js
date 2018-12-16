@@ -31,7 +31,7 @@ class Filler extends Worker {
     }
 
     if (this.creep.memory.filling) {
-      let target = getObjectById(this.creep.memory.fillId);
+      let target = this.creep.memory.fillId ? getObjectById(this.creep.memory.fillId) : undefined;
 
       if (!target) {
         if (!this.creep.memory.fillId) {
