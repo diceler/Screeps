@@ -42,7 +42,7 @@ class Filler extends Worker {
           const structures = _.filter(
             this.creep.room.structures,
             ({structureType, isWithdrawOnly, isFull}) =>
-              _.some([STRUCTURE_EXTENSION, STRUCTURE_CONTAINER, STRUCTURE_TOWER], structureType) &&
+              _.some([STRUCTURE_EXTENSION, STRUCTURE_CONTAINER, STRUCTURE_TOWER], type => structureType === type) &&
               !isWithdrawOnly && !isFull
           );
 
