@@ -46,7 +46,7 @@ class Filler extends Worker {
               structures = structuresInRoom[STRUCTURE_TOWER];
               break;
             case STRUCTURE_CONTAINER:
-              structures = structuresInRoom[STRUCTURE_CONTAINER];
+              structures = _.filter(structuresInRoom[STRUCTURE_CONTAINER], 'isWithdrawOnly', false);
               break;
           }
 
