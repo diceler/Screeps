@@ -31,25 +31,27 @@ class Filler extends Worker {
     }
 
     if (this.creep.memory.filling) {
-      let target;
-
-      if (_.size(this.creep.room.hostiles)) {
-        target = _.find(this.creep.room.structures, structure => structure.structureType === STRUCTURE_TOWER && structure.energy < 500);
-      }
+      let target = getObjectById(this.creep.memory.fillId);
 
       if (!target) {
-        if (!this.creep.memory.targetId) {
-          const structures = _.filter(
-            this.creep.room.structures,
-            ({structureType, isWithdrawOnly, isFull}) =>
-              _.some([STRUCTURE_EXTENSION, STRUCTURE_CONTAINER, STRUCTURE_TOWER], type => structureType === type) &&
-              !isWithdrawOnly && !isFull
-          );
+        if (!this.creep.memory.fillId) {
+          const structuresInRoom = _.groupBy(this.creep.room.structures, 'structureType');
+          let structures;
+
+          switch (this.creep.memory.fill) {
+            case STRUCTURE_EXTENSION:
+              structures = structuresInRoom[STRUCTURE_EXTENSION] || structuresInRoom[STRUCTURE_SPAWN];
+              break;
+            case STRUCTURE_TOWER:
+              structures = structuresInRoom[STRUCTURE_TOWER];
+              break;
+            case STRUCTURE_CONTAINER:
+              structures = structuresInRoom[STRUCTURE_CONTAINER];
+              break;
+          }
 
           target = _.first(structures);
-          this.creep.memory.targetId = _.get(target, 'id', undefined);
-        } else {
-          target = getObjectById(this.creep.memory.targetId);
+          this.creep.memory.fillId = _.get(target, 'id', undefined);
         }
       }
 
@@ -62,7 +64,7 @@ class Filler extends Worker {
             break;
           case OK:
           case ERR_FULL:
-            delete this.creep.memory.targetId;
+            delete this.creep.memory.fillId;
             break;
         }
       }

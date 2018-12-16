@@ -50,7 +50,7 @@ class Worker extends CreepBase {
   }
 
   deliver() {
-    let storage/* = _.size(this.creep.room.creeps[ROLE_FILLER]) ? this.creep.room.storage : undefined*/;
+    let storage = _.size(this.creep.room.creeps[ROLE_FILLER]) ? this.creep.room.storage : undefined;
 
     // In cases of attacks make sure towers are fed energy.
     if (_.size(this.creep.room.hostiles) && !_.size(this.creeps[ROLE_FILLER])) {
@@ -81,7 +81,7 @@ class Worker extends CreepBase {
   }
 
   recharge() {
-    let storage;
+    let storage = this.creep.room.storage;
 
     if (!this.creep.memory.storageId) {
       storage = this.findStorage(structure => _.some([STRUCTURE_SPAWN, STRUCTURE_EXTENSION], type => structure.structureType === type) && !structure.isEmpty);

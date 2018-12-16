@@ -32,10 +32,18 @@ Room.prototype.loop = function () {
     // Spawn Fillers if Room.storage exists.
     if (this.controller.level >= 4) {
       if (this.storage) {
-        const fillersInRoom = _.size(this.creeps[ROLE_FILLER]);
+        const fillersInRoom = this.creeps[ROLE_FILLER];
 
-        if (!fillersInRoom) {
-          this.requestCreep(this.name, ROLE_FILLER);
+        if (!_.some(fillersInRoom, 'memory.fill', STRUCTURE_EXTENSION)) {
+          this.requestCreep(this.name, ROLE_FILLER, {fill: STRUCTURE_EXTENSION});
+        }
+
+        if (!_.some(fillersInRoom, 'memory.fill', STRUCTURE_TOWER)) {
+          this.requestCreep(this.name, ROLE_FILLER, {fill: STRUCTURE_TOWER});
+        }
+
+        if (!_.some(fillersInRoom, 'memory.fill', STRUCTURE_CONTAINER)) {
+          this.requestCreep(this.name, ROLE_FILLER, {fill: STRUCTURE_CONTAINER});
         }
       }
     }
