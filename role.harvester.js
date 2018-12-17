@@ -41,7 +41,7 @@ class Harvester extends Worker {
           if (this.creep.moveTo(source.container, {range: 0}) === ERR_NO_PATH) {
             const creepsOnContainer = source.container.pos.lookFor(LOOK_CREEPS);
 
-            if (creepsOnContainer) {
+            if (_.size(creepsOnContainer)) {
               _.first(creepsOnContainer).moveTo(source, {avoid: [source.container.pos]});
             }
           }
